@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>[Your Name] — Measurement &amp; Applied AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F2;
+    --ink:#18241F;
+    --ink-soft:#4A574F;
+    --teal:#156A6B;
+    --ochre:#C2843E;
+    --line:#D5D8D1;
+    --panel:#FBFBF9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    font-size:18px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+  .display{font-family:"Space Grotesk",sans-serif;line-height:1.04;letter-spacing:-.02em}
+  a{color:inherit}
+
+  /* ---- top bar ---- */
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:62px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem}
+  .topbar nav{display:flex;gap:26px}
+  .topbar nav a{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+  .topbar nav a:hover{color:var(--teal)}
+  @media(max-width:620px){.topbar nav{display:none}}
+
+  /* ---- hero ---- */
+  .hero{padding:78px 0 64px}
+  .hero .eyebrow{margin-bottom:26px}
+  .hero h1{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:600;
+    font-size:clamp(2.6rem,7vw,4.6rem);
+    line-height:1.02;
+    letter-spacing:-.03em;
+    max-width:14ch;
+  }
+  .hero h1 em{font-style:normal;color:var(--teal)}
+  .hero .lede{
+    margin-top:28px;max-width:54ch;font-size:1.18rem;color:var(--ink-soft);
+  }
+
+  /* ---- signature: the calibration instrument ---- */
+  .instrument{
+    margin-top:54px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:26px 30px 30px;
+  }
+  .instrument .head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:30px}
+  .instrument .head .reading{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.1em;color:var(--ink-soft)}
+  .instrument .head .reading b{color:var(--ochre);font-weight:500}
+  .scale{position:relative;height:46px;margin:0 4px}
+  .scale .track{position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink)}
+  .scale .tick{position:absolute;top:50%;width:1px;height:9px;background:var(--line);transform:translateY(-50%)}
+  .scale .tick.major{height:15px;background:var(--ink-soft)}
+  .scale .marker{
+    position:absolute;top:50%;left:50%;
+    transform:translate(-50%,-50%) scaleY(0);
+    transform-origin:center;
+    width:2px;height:40px;background:var(--ochre);
+    transition:transform .9s cubic-bezier(.22,1,.36,1) .35s, left 1.1s cubic-bezier(.22,1,.36,1) .35s;
+  }
+  .scale .marker::after{
+    content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%);
+    width:9px;height:9px;background:var(--ochre);border-radius:50%;
+  }
+  .calibrated .scale .marker{transform:translate(-50%,-50%) scaleY(1)}
+  .poles{display:flex;justify-content:space-between;margin-top:6px}
+  .poles span{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+
+  /* ---- generic section ---- */
+  section{padding:70px 0;border-top:1px solid var(--line)}
+  .sec-label{margin-bottom:34px;display:flex;align-items:baseline;gap:14px}
+  .sec-label .num{font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--ink-soft);letter-spacing:.1em}
+  .sec-label h2{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase}
+
+  /* ---- about ---- */
+  .about p{font-size:1.32rem;line-height:1.5;max-width:40ch;margin-bottom:22px}
+  .about p:last-child{margin-bottom:0}
+  .about strong{font-weight:500;color:var(--teal)}
+
+  /* ---- studies ---- */
+  .study{
+    display:grid;grid-template-columns:140px 1fr;gap:30px;
+    padding:30px 0;border-top:1px dashed var(--line);
+  }
+  .study:first-of-type{border-top:none;padding-top:0}
+  .study .meta .method{display:block;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.1em;color:var(--teal);text-transform:uppercase;margin-bottom:10px}
+  .study .meta .stack{font-family:"JetBrains Mono",monospace;font-size:.66rem;line-height:1.9;color:var(--ink-soft)}
+  .study h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.5rem;letter-spacing:-.01em;margin-bottom:12px}
+  .study p{color:var(--ink-soft);max-width:52ch;margin-bottom:16px}
+  .study .demonstrates{font-size:.92rem;color:var(--ink)}
+  .study .demonstrates b{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:400;display:block;margin-bottom:5px}
+  .study .links{margin-top:14px}
+  .study .links a{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+  .study .links a:hover{border-color:var(--teal)}
+  @media(max-width:620px){.study{grid-template-columns:1fr;gap:14px}}
+
+  /* ---- toolkit ---- */
+  .toolkit{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 40px}
+  .toolkit .group h4{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+  .toolkit .group ul{list-style:none}
+  .toolkit .group li{font-size:.98rem;padding:3px 0;color:var(--ink-soft)}
+  @media(max-width:620px){.toolkit{grid-template-columns:1fr}}
+
+  /* ---- contact ---- */
+  .contact{border-top:1px solid var(--line)}
+  .contact h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.02em;margin-bottom:24px;max-width:18ch}
+  .contact h2 em{font-style:normal;color:var(--teal)}
+  .contact .links{display:flex;flex-wrap:wrap;gap:14px 28px}
+  .contact .links a{font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--ochre);padding-bottom:3px}
+  .contact .links a:hover{color:var(--teal);border-color:var(--teal)}
+  footer{padding:40px 0 60px;color:var(--ink-soft)}
+  footer .mono{color:var(--ink-soft)}
+
+  /* load reveal */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .scale .marker{transition:none}
+    html{scroll-behavior:auto}
+  }
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <span class="id">[Your Name]</span>
+      <nav>
+        <a href="#about">Approach</a>
+        <a href="#work">Work</a>
+        <a href="#toolkit">Toolkit</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO -->
+    <div class="hero">
+      <div class="wrap">
+        <div class="eyebrow mono reveal">I/O Psychology · Advanced Quantitative Methods</div>
+        <h1 class="reveal">I build systems that <em>measure</em> what people do — and prove the measurement holds.</h1>
+        <p class="lede reveal">Applied AI and analytics work grounded in psychometrics: reliability, validity, and fairness applied to machine-learning and LLM systems.</p>
+
+        <!-- SIGNATURE: calibration instrument -->
+        <div class="instrument reveal" id="instrument">
+          <div class="head">
+            <span class="mono">Calibration</span>
+            <span class="reading">reading: <b>the intersection</b></span>
+          </div>
+          <div class="scale" id="scale">
+            <div class="track"></div>
+            <div class="marker"></div>
+          </div>
+          <div class="poles">
+            <span>Human behavior</span>
+            <span>Machine learning</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+      <div class="wrap">
+        <div class="sec-label"><span class="num">01</span><h2>Approach</h2></div>
+        <p>Most people who can train a model can't tell you whether its scores actually <strong>mean</strong> anything. Most people who understand measurement can't <strong>build</strong> the model.</p>
+        <p>My training sits on both sides — a master's in industrial-organizational psychology with an advanced quantitative methods focus, plus hands-on engineering with ML and large language models.</p>
+        <p>I'm most useful where human judgment meets automated scoring: model evaluation, people analytics, and assessment systems that have to be <strong>defensible</strong>, not just accurate.</p>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work">
+      <div class="wrap">
+        <div class="sec-label"><span class="num">02</span><h2>Selected Work</h2></div>
+
+        <article class="study">
+          <div class="meta">
+            <span class="method">Measurement · LLM Eval</span>
+            <div class="stack">Python<br>Anthropic API<br>scikit-learn<br>pandas</div>
+          </div>
+          <div class="body">
+            <h3>Does the model rate like a human?</h3>
+            <p>An LLM-based scorer for open-ended responses — essays, interview answers, survey comments — validated the way an assessment would be: inter-rater reliability against human raters, score-distribution checks, and an adverse-impact analysis across demographic groups.</p>
+            <div class="demonstrates">
+              <b>Demonstrates</b>
+              LLM engineering, psychometric validation (ICC, weighted kappa), and bias auditing in one pipeline.
+            </div>
+            <div class="links"><a href="#">View repository →</a></div>
+          </div>
+        </article>
+
+        <article class="study">
+          <div class="meta">
+            <span class="method">Prediction · Fairness</span>
+            <div class="stack">Python<br>scikit-learn<br>gradient boosting<br>joblib</div>
+          </div>
+          <div class="body">
+            <h3>Predicting attrition without the black box</h3>
+            <p>A turnover-prediction model on public HR data that goes past accuracy: interpretable feature importance, the organizational-behavior theory behind each predictor, and a fairness review of who the model flags and why.</p>
+            <div class="demonstrates">
+              <b>Demonstrates</b>
+              Applied ML, model interpretation, and translating predictions into decisions a stakeholder can act on.
+            </div>
+            <div class="links"><a href="#">View repository →</a></div>
+          </div>
+        </article>
+
+        <article class="study">
+          <div class="meta">
+            <span class="method">NLP · Constructs</span>
+            <div class="stack">Python<br>scikit-learn<br>TF-IDF · NMF</div>
+          </div>
+          <div class="body">
+            <h3>What employees actually say</h3>
+            <p>Open-ended employee comments turned into structure: embeddings and topic modeling mapped to engagement constructs, with a read on how themes track measured outcomes rather than just word counts.</p>
+            <div class="demonstrates">
+              <b>Demonstrates</b>
+              NLP, unsupervised learning, and connecting unstructured text to validated psychological constructs.
+            </div>
+            <div class="links"><a href="#">View repository →</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- TOOLKIT -->
+    <section id="toolkit">
+      <div class="wrap">
+        <div class="sec-label"><span class="num">03</span><h2>Toolkit</h2></div>
+        <div class="toolkit">
+          <div class="group">
+            <h4>Measurement &amp; Statistics</h4>
+            <ul>
+              <li>Reliability &amp; validity theory</li>
+              <li>Factor analysis · SEM</li>
+              <li>Item response theory</li>
+              <li>Multilevel &amp; regression modeling</li>
+              <li>Adverse-impact / fairness analysis</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h4>Machine Learning</h4>
+            <ul>
+              <li>scikit-learn · XGBoost</li>
+              <li>Model evaluation &amp; interpretation</li>
+              <li>SHAP · feature analysis</li>
+              <li>Experiment design</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h4>LLM &amp; AI</h4>
+            <ul>
+              <li>Anthropic &amp; OpenAI APIs</li>
+              <li>LLM-as-evaluator pipelines</li>
+              <li>Rubric design &amp; human eval</li>
+              <li>RAG · prompting</li>
+            </ul>
+          </div>
+          <div class="group">
+            <h4>Engineering</h4>
+            <ul>
+              <li>Python (pandas, NumPy)</li>
+              <li>Git / GitHub</li>
+              <li>Jupyter · reproducible analysis</li>
+              <li>R (when the stats call for it)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <h2>Open to work in <em>AI evaluation</em>, people analytics, and psychometric data science.</h2>
+        <div class="links">
+          <a href="mailto:[you@email.com]">Email</a>
+          <a href="#">GitHub</a>
+          <a href="#">LinkedIn</a>
+          <a href="#">Résumé (PDF)</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span class="mono">[Your Name] · Built &amp; maintained personally · 2026</span>
+    </div>
+  </footer>
+
+  <script>
+    // calibration marker settles to center on load
+    window.addEventListener('load', function(){
+      var inst = document.getElementById('instrument');
+      var scale = document.getElementById('scale');
+      // build ticks
+      for(var i=0;i<=20;i++){
+        var t=document.createElement('div');
+        t.className='tick'+(i%5===0?' major':'');
+        t.style.left=(i/20*100)+'%';
+        scale.appendChild(t);
+      }
+      var marker=scale.querySelector('.marker');
+      scale.appendChild(marker); // keep marker on top
+      setTimeout(function(){ inst.classList.add('calibrated'); marker.style.left='50%'; },120);
+    });
+
+    // scroll reveal
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+  </script>
+</body>
+</html>
