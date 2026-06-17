@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Are You a Biased Judge? — Amira Ghazy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F2; --ink:#18241F; --ink-soft:#4A574F;
+    --teal:#156A6B; --ochre:#C2843E; --line:#D5D8D1; --panel:#FBFBF9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{max-width:680px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:62px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar .back{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+  .topbar .back:hover{color:var(--teal)}
+
+  .head{max-width:680px;margin:0 auto;padding:52px 24px 20px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(2rem,6vw,2.9rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:16px}
+  .dek{font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:54ch}
+
+  .stage{max-width:680px;margin:24px auto 80px;padding:0 24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:24px}
+
+  .bar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .progress{height:3px;background:var(--line);border-radius:2px;margin-bottom:22px;overflow:hidden}
+  .progress span{display:block;height:100%;background:var(--teal);width:0;transition:width .4s ease}
+
+  .q{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.4rem;line-height:1.2;letter-spacing:-.01em;margin-bottom:6px}
+  .qsub{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:20px}
+
+  .opt{
+    display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:3px;
+    padding:18px 20px;margin-bottom:14px;cursor:pointer;font-family:"Newsreader",serif;font-size:1.05rem;line-height:1.5;color:var(--ink);
+    transition:border-color .15s,background .15s,transform .08s;
+  }
+  .opt:hover{border-color:var(--teal);background:rgba(21,106,107,.04)}
+  .opt:active{transform:scale(.995)}
+  .opt .tag{display:block;font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px}
+  .opt:disabled{cursor:default}
+  .opt.chosen{border-color:var(--teal);background:rgba(21,106,107,.07)}
+  .opt.dim{opacity:.45}
+
+  /* end / readout */
+  .end .heading{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+  .end .verdict{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.7rem;line-height:1.12;letter-spacing:-.01em;margin-bottom:12px}
+  .end .tag{font-size:1.02rem;line-height:1.55;color:var(--ink-soft);margin-bottom:26px}
+
+  .metric{padding:13px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .metric:first-of-type{border-top:none}
+  .metric .name{font-size:.98rem;line-height:1.3}
+  .metric .name small{display:block;color:var(--ink-soft);font-size:.76rem;margin-top:2px;font-family:"JetBrains Mono",monospace;letter-spacing:.03em}
+  .metric .right{display:flex;align-items:center;gap:10px;flex:none}
+  .metric .num{font-family:"JetBrains Mono",monospace;font-size:1.05rem;min-width:54px;text-align:right}
+  .chip{font-family:"JetBrains Mono",monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;min-width:46px;text-align:center}
+  .chip.ok{background:rgba(21,106,107,.12);color:var(--teal)}
+  .chip.bad{background:rgba(194,132,62,.16);color:var(--ochre)}
+
+  .foot{margin-top:26px;font-size:.97rem;line-height:1.55;color:var(--ink-soft)}
+  .foot a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+  .again{margin-top:22px;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1rem;padding:13px 26px;border:1px solid var(--teal);color:var(--teal);background:#fff;border-radius:3px;cursor:pointer}
+  .again:hover{background:rgba(21,106,107,.06)}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <a class="back" href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <div class="head">
+    <div class="eyebrow">Game</div>
+    <h1>Are you a biased judge?</h1>
+    <p class="dek">Pick the better answer, ten times. There are no scores along the way. At the end, you get audited: were you swayed by length, or by which answer you read first? These are the exact biases I test AI judges for.</p>
+  </div>
+
+  <div class="stage">
+    <div class="card" id="card"></div>
+  </div>
+
+  <script>
+  (function(){
+    // role: 'vtrap' (longer answer is NOT better), 'qlong' (longer IS better), 'pos' (toss-up)
+    // qual: higher = better answer. Length is taken from the actual text.
+    var ROUNDS = [
+      { q:"What's the capital of Australia?", role:"vtrap",
+        a:{t:"Canberra.", qual:2},
+        b:{t:"Australia's largest and most globally recognised city is Sydney, a thriving coastal hub, and as the nation's most prominent urban centre it effectively functions as its capital.", qual:1} },
+
+      { q:"Quickest way to reverse a string in Python?", role:"vtrap",
+        a:{t:"Use slicing: s[::-1].", qual:2},
+        b:{t:"Reasonable engineers differ, but one common approach is to loop over the characters from the last index down to the first and append each onto a new string until the whole thing has been rebuilt in reverse order.", qual:1} },
+
+      { q:"Suggest a name for a friendly robot.", role:"pos",
+        a:{t:"How about calling it Pixel?", qual:1},
+        b:{t:"You could go with the name Bolt.", qual:1} },
+
+      { q:"Why is the sky blue?", role:"qlong",
+        a:{t:"Because it reflects the ocean.", qual:1},
+        b:{t:"Sunlight holds every colour, and air molecules scatter its shorter blue wavelengths far more than the longer red ones, so scattered blue light reaches your eyes from all over the sky and makes it look blue.", qual:2} },
+
+      { q:"Define recursion, briefly.", role:"vtrap",
+        a:{t:"A function that calls itself until a base case stops it.", qual:2},
+        b:{t:"Recursion is a concept in which a function, during its own execution, makes one or more further calls to itself, repeating this again and again until it reaches a base case, at which point the whole chain of calls finally resolves.", qual:2} },
+
+      { q:"Give a quick team-meeting icebreaker.", role:"pos",
+        a:{t:"Ask everyone to share a favourite app.", qual:1},
+        b:{t:"Ask everyone to share a hidden talent.", qual:1} },
+
+      { q:"What does an HTTP 404 mean?", role:"vtrap",
+        a:{t:"The page wasn't found.", qual:2},
+        b:{t:"It signals that the web server has run into an internal misconfiguration or overload that stops it from completing the request, usually needing an administrator to step in and resolve things on the back end.", qual:1} },
+
+      { q:"How do I make my password stronger?", role:"qlong",
+        a:{t:"Add a number at the end.", qual:1},
+        b:{t:"Use a longer passphrase made of several random words, don't reuse it across sites, and switch on two-factor authentication wherever you can, since length and uniqueness protect you far more than swapping one letter for a symbol.", qual:2} },
+
+      { q:"What is 15% of 200?", role:"vtrap",
+        a:{t:"30.", qual:2},
+        b:{t:"To take a percentage of a number you scale it down by that proportion, and carrying it through here, fifteen percent of two hundred works out to roughly twenty-five once the fraction is applied.", qual:1} },
+
+      { q:"Recommend one productivity tip.", role:"pos",
+        a:{t:"Batch similar tasks together.", qual:1},
+        b:{t:"Take a short walk every hour.", qual:1} }
+    ];
+
+    var card = document.getElementById("card");
+    var order = [], idx = 0;
+    var firstPicks=0, vNum=0, vDen=0, qNum=0, qDen=0, slot=[];
+
+    function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+    function start(){
+      order = shuffle(ROUNDS.map(function(_,i){return i;}));
+      idx=0; firstPicks=0; vNum=0; vDen=0; qNum=0; qDen=0;
+      render();
+    }
+
+    function render(){
+      var r = ROUNDS[order[idx]];
+      // randomize which answer is shown on top
+      var top, bot;
+      if(Math.random()<0.5){ top=r.a; bot=r.b; } else { top=r.b; bot=r.a; }
+      card.innerHTML =
+        '<div class="bar"><span>Round '+(idx+1)+' / '+ROUNDS.length+'</span><span>Pick the better answer</span></div>'+
+        '<div class="progress"><span style="width:'+(idx/ROUNDS.length*100)+'%"></span></div>'+
+        '<div class="q">'+r.q+'</div><div class="qsub">Two answers &#183; choose one</div>'+
+        '<button class="opt" id="opt-top"><span class="tag">Answer A</span>'+top.t+'</button>'+
+        '<button class="opt" id="opt-bot"><span class="tag">Answer B</span>'+bot.t+'</button>';
+      document.getElementById("opt-top").onclick=function(){choose(r, top, bot, true, this);};
+      document.getElementById("opt-bot").onclick=function(){choose(r, bot, top, false, this);};
+    }
+
+    function choose(r, chosen, other, isTop, el){
+      // tally
+      if(isTop) firstPicks++;
+      if(r.role==="vtrap"){ vDen++; if(chosen.t.length > other.t.length) vNum++; }
+      if(chosen.qual !== other.qual){ qDen++; if(chosen.qual > other.qual) qNum++; }
+
+      el.classList.add("chosen");
+      document.getElementById("opt-top").disabled=true;
+      document.getElementById("opt-bot").disabled=true;
+      var others = isTop ? "opt-bot" : "opt-top";
+      document.getElementById(others).classList.add("dim");
+
+      setTimeout(function(){ idx++; (idx<ROUNDS.length)?render():end(); }, 360);
+    }
+
+    function pct(n,d){ return d? Math.round(n/d*100) : 0; }
+
+    function end(){
+      var posRate = pct(firstPicks, ROUNDS.length);     // 50 = unbiased
+      var verbRate = pct(vNum, vDen);                    // lower = unbiased
+      var accRate  = pct(qNum, qDen);                    // higher = better judge
+
+      var posBad = (posRate>70 || posRate<30);
+      var verbBad = (verbRate>50);
+
+      var verdict, tag;
+      if(!posBad && !verbBad){
+        verdict = "You judge like a calibrated rater.";
+        tag = "Length and reading order didn't move you. You actually read for quality, which is rarer than it sounds, in people and in models.";
+      } else if(posBad && verbBad){
+        verdict = "You've got two tells: length and order.";
+        tag = "You leaned toward longer answers and toward whatever you saw first. Both are real biases, and an LLM judge shows the exact same pair.";
+      } else if(verbBad){
+        verdict = "You lean toward longer answers.";
+        tag = "You picked the wordier answer even when it wasn't the better one. Verbosity bias is the most documented failure mode in LLM judges too, they mistake length for quality.";
+      } else {
+        verdict = "You favour whatever you read first.";
+        tag = "You leaned toward the top answer more than chance would explain. Position bias is why serious eval pipelines score every pair in both orders.";
+      }
+
+      function row(name, sub, valTxt, ok, okTxt, badTxt){
+        return '<div class="metric"><div class="name">'+name+'<small>'+sub+'</small></div>'+
+          '<div class="right"><span class="num">'+valTxt+'</span>'+
+          '<span class="chip '+(ok?"ok":"bad")+'">'+(ok?okTxt:badTxt)+'</span></div></div>';
+      }
+
+      card.innerHTML =
+        '<div class="end">'+
+          '<div class="heading">Your audit</div>'+
+          '<div class="verdict">'+verdict+'</div>'+
+          '<div class="tag">'+tag+'</div>'+
+          row("Length lean", "chose the longer answer when it wasn't better", verbRate+"%", !verbBad, "fair", "length bias")+
+          row("Position lean", "chose the answer shown first &#183; 50% is fair", posRate+"%", !posBad, "fair", "order bias")+
+          row("Quality accuracy", "picked the genuinely better answer", qNum+"/"+qDen, accRate>=70, accRate+"%", accRate+"%")+
+          '<div class="foot">These are two of the checks in my LLM-judge audit. Watch them on a model in <a href="judge-audit-demo.html">the demo</a>, review judges yourself in <a href="spot-the-broken-judge.html">Spot the Broken Judge</a>, or run them on real data with <a href="https://github.com/amira-ghazy/evalaudit">evalaudit</a>.</div>'+
+          '<button class="again" id="again">Play again</button>'+
+        '</div>';
+      document.getElementById("again").onclick=start;
+    }
+
+    start();
+  })();
+  </script>
+</body>
+</html>
