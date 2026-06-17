@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Spot the Broken Judge — Amira Ghazy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F2; --ink:#18241F; --ink-soft:#4A574F;
+    --teal:#156A6B; --ochre:#C2843E; --line:#D5D8D1; --panel:#FBFBF9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{max-width:720px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:62px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar .back{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+  .topbar .back:hover{color:var(--teal)}
+
+  .head{max-width:720px;margin:0 auto;padding:54px 24px 22px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(2rem,6vw,2.9rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:16px}
+  .dek{font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:56ch}
+
+  .rules{max-width:720px;margin:0 auto 26px;padding:0 24px}
+  .rules .inner{font-family:"JetBrains Mono",monospace;font-size:.7rem;line-height:1.7;color:var(--ink-soft);background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:12px 16px}
+  .rules b{color:var(--ink);font-weight:500}
+
+  .stage{max-width:720px;margin:0 auto 80px;padding:0 24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:24px}
+
+  .bar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .bar .score b{color:var(--teal);font-weight:500}
+  .bar .streak{color:var(--ochre)}
+  .progress{height:3px;background:var(--line);border-radius:2px;margin-bottom:20px;overflow:hidden}
+  .progress span{display:block;height:100%;background:var(--teal);width:0;transition:width .4s ease}
+
+  .scenario{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:1.15rem;margin-bottom:4px}
+  .scenario small{display:block;font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:6px}
+
+  .metrics{margin:18px 0 4px}
+  .metric{padding:11px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .metric .name{font-size:.95rem;line-height:1.3}
+  .metric .name small{display:block;color:var(--ink-soft);font-size:.74rem;margin-top:2px;font-family:"JetBrains Mono",monospace;letter-spacing:.04em}
+  .metric .right{display:flex;align-items:center;gap:10px;flex:none}
+  .metric .num{font-family:"JetBrains Mono",monospace;font-size:1rem;min-width:54px;text-align:right}
+  .chip{font-family:"JetBrains Mono",monospace;font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;border-radius:999px;opacity:0;transition:opacity .25s;min-width:42px;text-align:center}
+  .chip.show{opacity:1}
+  .chip.in{background:rgba(21,106,107,.12);color:var(--teal)}
+  .chip.out{background:rgba(194,132,62,.16);color:var(--ochre)}
+
+  .choices{display:flex;gap:12px;margin-top:22px}
+  .choices button{
+    flex:1;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1rem;
+    padding:15px 10px;border-radius:3px;cursor:pointer;border:1px solid var(--line);background:#fff;color:var(--ink);
+    transition:border-color .15s,background .15s;
+  }
+  .choices button .k{display:block;font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:4px}
+  .choices button:hover{border-color:var(--teal)}
+  .choices button.ship:hover{border-color:var(--teal);background:rgba(21,106,107,.05)}
+  .choices button.flag:hover{border-color:var(--ochre);background:rgba(194,132,62,.05)}
+  .choices button:disabled{opacity:.4;cursor:default}
+
+  .result{margin-top:20px;border:1px solid var(--line);border-radius:3px;padding:16px 18px;display:none}
+  .result.show{display:block}
+  .result .verdict{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.05rem;margin-bottom:6px;display:flex;align-items:center;gap:9px}
+  .result .verdict .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .result .why{font-size:.95rem;line-height:1.5;color:var(--ink-soft)}
+  .result.right{background:rgba(21,106,107,.05);border-color:var(--teal)}
+  .result.right .dot{background:var(--teal)}
+  .result.wrong{background:rgba(194,132,62,.06);border-color:var(--ochre)}
+  .result.wrong .dot{background:var(--ochre)}
+  .next{margin-top:16px;font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:none;border:none;border-bottom:1px solid var(--line);padding:0 0 3px;cursor:pointer}
+  .next:hover{border-color:var(--teal)}
+
+  /* end screen */
+  .end{text-align:center;padding:14px 0}
+  .end .final{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:3.4rem;letter-spacing:-.02em;color:var(--teal);line-height:1}
+  .end .of{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .end .tier{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:1.25rem;margin:18px 0 10px}
+  .end .tag{font-size:.98rem;line-height:1.55;color:var(--ink-soft);max-width:48ch;margin:0 auto 22px}
+  .end .tag a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+  .end .again{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1rem;padding:13px 26px;border:1px solid var(--teal);color:var(--teal);background:#fff;border-radius:3px;cursor:pointer}
+  .end .again:hover{background:rgba(21,106,107,.06)}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <a class="back" href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <div class="head">
+    <div class="eyebrow">Game</div>
+    <h1>Spot the broken judge</h1>
+    <p class="dek">You're the evaluation reviewer. Each round shows one judge's audit. Ship it if every check is in tolerance, flag it if even one is off. Eight rounds.</p>
+  </div>
+
+  <div class="rules">
+    <div class="inner">
+      SHIP ONLY IF ALL FIVE PASS &nbsp;·&nbsp; <b>self-consistency &#8805; 0.80</b> &nbsp;·&nbsp; <b>agreement &#8805; 0.60</b> &nbsp;·&nbsp; <b>|verbosity| &#8804; 0.15</b> &nbsp;·&nbsp; <b>group gap &#8804; 0.10</b> &nbsp;·&nbsp; <b>position 45&ndash;55%</b>
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="card" id="card"><!-- filled by JS --></div>
+  </div>
+
+  <script>
+  (function(){
+    var T = { consist:0.80, agree:0.60, verb:0.15, gap:0.10, pos:0.05 };
+
+    // pool of judge reports; correct answer is computed, never hard-coded
+    var POOL = [
+      {label:"Summarization quality judge", m:{consist:.88, agree:.82, verb:.05, gap:.03, pos:.51}},
+      {label:"Essay scoring judge",          m:{consist:.68, agree:.79, verb:.04, gap:.02, pos:.50}},
+      {label:"Helpfulness judge",            m:{consist:.85, agree:.88, verb:.34, gap:.04, pos:.52}},
+      {label:"Hiring-task rubric judge",     m:{consist:.86, agree:.80, verb:.06, gap:.22, pos:.49}},
+      {label:"Pairwise preference judge",    m:{consist:.87, agree:.81, verb:.03, gap:.02, pos:.63}},
+      {label:"Support-reply judge",          m:{consist:.81, agree:.64, verb:-.09, gap:.08, pos:.54}},
+      {label:"Code-review judge",            m:{consist:.72, agree:.55, verb:.28, gap:.18, pos:.61}},
+      {label:"Translation quality judge",    m:{consist:.84, agree:.78, verb:-.22, gap:.05, pos:.50}},
+      {label:"Creative-writing judge",       m:{consist:.83, agree:.47, verb:.07, gap:.04, pos:.51}},
+      {label:"Factuality judge",             m:{consist:.90, agree:.85, verb:.02, gap:.01, pos:.50}},
+      {label:"Tone & safety judge",          m:{consist:.82, agree:.63, verb:.12, gap:.07, pos:.53}},
+      {label:"Reasoning-trace judge",        m:{consist:.89, agree:.84, verb:.04, gap:.03, pos:.57}}
+    ];
+
+    var ROWS = [
+      {key:"consist", name:"Self-consistency", sub:"test-retest &#954; &#183; &#8805; 0.80",
+        fmt:function(v){return v.toFixed(2);}, fail:function(v){return v < T.consist;}},
+      {key:"agree", name:"Agreement w/ humans", sub:"weighted &#954; &#183; &#8805; 0.60",
+        fmt:function(v){return v.toFixed(2);}, fail:function(v){return v < T.agree;}},
+      {key:"verb", name:"Verbosity bias", sub:"partial r &#183; |r| &#8804; 0.15",
+        fmt:function(v){return (v>=0?"+":"")+v.toFixed(2);}, fail:function(v){return Math.abs(v) > T.verb;}},
+      {key:"gap", name:"Group invariance", sub:"score gap &#183; &#8804; 0.10",
+        fmt:function(v){return v.toFixed(2);}, fail:function(v){return v > T.gap;}},
+      {key:"pos", name:"Position bias", sub:"first-shown wins &#183; 45&ndash;55%",
+        fmt:function(v){return Math.round(v*100)+"%";}, fail:function(v){return Math.abs(v-0.5) > T.pos;}}
+    ];
+
+    var ROUNDS = 8, deck = [], idx = 0, score = 0, streak = 0, answered = false;
+    var card = document.getElementById("card");
+
+    function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+    function fails(m){return ROWS.filter(function(r){return r.fail(m[r.key]);});}
+
+    function start(){
+      deck = shuffle(POOL.slice()).slice(0, ROUNDS);
+      idx = 0; score = 0; streak = 0;
+      renderRound();
+    }
+
+    function renderRound(){
+      answered = false;
+      var sc = deck[idx], m = sc.m;
+      var rowsHtml = ROWS.map(function(r){
+        return '<div class="metric" data-key="'+r.key+'">'+
+          '<div class="name">'+r.name+'<small>'+r.sub+'</small></div>'+
+          '<div class="right"><span class="num">'+r.fmt(m[r.key])+'</span>'+
+          '<span class="chip" id="chip-'+r.key+'"></span></div></div>';
+      }).join("");
+      card.innerHTML =
+        '<div class="bar"><span>Round '+(idx+1)+' / '+ROUNDS+'</span>'+
+        '<span class="score">Score <b>'+score+'</b>'+(streak>1?' <span class="streak">&#183; '+streak+' streak</span>':'')+'</span></div>'+
+        '<div class="progress"><span style="width:'+(idx/ROUNDS*100)+'%"></span></div>'+
+        '<div class="scenario">'+sc.label+'<small>Audit report</small></div>'+
+        '<div class="metrics">'+rowsHtml+'</div>'+
+        '<div class="choices">'+
+          '<button class="ship" id="b-ship">Ship it<span class="k">no red flags</span></button>'+
+          '<button class="flag" id="b-flag">Flag it<span class="k">something\u2019s off</span></button>'+
+        '</div>'+
+        '<div class="result" id="result"><div class="verdict"><span class="dot"></span><span id="vtext"></span></div>'+
+        '<div class="why" id="why"></div><button class="next" id="next"></button></div>';
+      document.getElementById("b-ship").onclick = function(){answer(true);};
+      document.getElementById("b-flag").onclick = function(){answer(false);};
+    }
+
+    function answer(playerShips){
+      if(answered) return;
+      answered = true;
+      var sc = deck[idx], m = sc.m;
+      var f = fails(m);
+      var shouldShip = f.length === 0;
+      var correct = (playerShips === shouldShip);
+      if(correct){ score++; streak++; } else { streak = 0; }
+
+      ROWS.forEach(function(r){
+        var chip = document.getElementById("chip-"+r.key);
+        var bad = r.fail(m[r.key]);
+        chip.textContent = bad ? "out" : "in";
+        chip.className = "chip show " + (bad ? "out" : "in");
+      });
+
+      document.getElementById("b-ship").disabled = true;
+      document.getElementById("b-flag").disabled = true;
+
+      var res = document.getElementById("result");
+      res.className = "result show " + (correct ? "right" : "wrong");
+      document.getElementById("vtext").textContent =
+        (correct ? "Correct \u2014 " : "Not quite \u2014 ") + (shouldShip ? "ship it" : "flag it");
+      var why;
+      if(shouldShip){
+        why = "All five checks sit within tolerance. A judge doesn\u2019t need perfect numbers, just numbers inside the bar.";
+      } else {
+        var names = f.map(function(r){return r.name.toLowerCase();});
+        var list = names.length===1 ? names[0] :
+          names.slice(0,-1).join(", ") + " and " + names[names.length-1];
+        why = "Out of tolerance: " + list + ". " +
+          (f.length===1 && f[0].key==="agree"
+            ? "Low agreement with humans means it isn\u2019t tracking quality."
+            : (f.some(function(r){return r.key==="verb";}) && m.agree>=T.agree
+              ? "Note it still agrees with humans \u2014 agreement alone would have hidden this."
+              : "Any single failure is enough to hold the judge back."));
+      }
+      document.getElementById("why").textContent = why;
+
+      var nx = document.getElementById("next");
+      nx.textContent = (idx+1 < ROUNDS) ? "Next round \u2192" : "See your score \u2192";
+      nx.onclick = function(){ idx++; (idx < ROUNDS) ? renderRound() : renderEnd(); };
+    }
+
+    function renderEnd(){
+      var tier, tag;
+      if(score===ROUNDS){ tier="Flawless."; tag="You read those the way a measurement specialist does."; }
+      else if(score>=6){ tier="Strong eye."; tag="You caught the traps, including the judge that agreed with humans but rewarded length."; }
+      else if(score>=4){ tier="Getting the hang of it."; tag="The tells live in the thresholds up top. Another round will sharpen it."; }
+      else { tier="The bar takes practice."; tag="Scan every one of the five checks before you call it \u2014 one failure is enough to flag."; }
+      card.innerHTML =
+        '<div class="end">'+
+          '<div class="final">'+score+'</div><div class="of">of '+ROUNDS+' calls correct</div>'+
+          '<div class="tier">'+tier+'</div>'+
+          '<div class="tag">'+tag+' This is exactly the read <a href="judge-audit-demo.html">the audit demo</a> lets you explore, and what <a href="https://github.com/amira-ghazy/evalaudit">evalaudit</a> automates.</div>'+
+          '<button class="again" id="again">Play again</button>'+
+        '</div>';
+      document.getElementById("again").onclick = start;
+    }
+
+    start();
+  })();
+  </script>
+</body>
+</html>
