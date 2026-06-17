@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Audit an LLM Judge — Amira Ghazy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F2;
+    --ink:#18241F;
+    --ink-soft:#4A574F;
+    --teal:#156A6B;
+    --ochre:#C2843E;
+    --line:#D5D8D1;
+    --panel:#FBFBF9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .mono{font-family:"JetBrains Mono",monospace}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{max-width:920px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:62px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar .back{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+  .topbar .back:hover{color:var(--teal)}
+
+  .head{max-width:920px;margin:0 auto;padding:60px 24px 30px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:20px}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(2rem,6vw,3rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:20px}
+  .dek{font-size:1.18rem;line-height:1.6;color:var(--ink-soft);max-width:60ch}
+
+  .lab{max-width:920px;margin:0 auto 80px;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+  @media(max-width:760px){.lab{grid-template-columns:1fr;gap:20px}}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:26px}
+  .card h2{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:22px}
+
+  .ctrl{margin-bottom:26px}
+  .ctrl:last-child{margin-bottom:0}
+  .ctrl .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .ctrl label{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:.95rem}
+  .ctrl .val{font-family:"JetBrains Mono",monospace;font-size:.8rem;color:var(--ochre)}
+  .ctrl .hint{font-size:.82rem;color:var(--ink-soft);margin-top:6px;line-height:1.4}
+  input[type=range]{width:100%;accent-color:var(--teal);height:24px}
+  .presets{display:flex;gap:10px;margin-top:28px}
+  .presets button{
+    flex:1;font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:11px 8px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:3px;cursor:pointer;
+  }
+  .presets button:hover{border-color:var(--teal);color:var(--teal)}
+
+  .verdict{border:1px solid var(--line);border-radius:3px;padding:16px 18px;margin-bottom:22px;display:flex;align-items:center;gap:12px;transition:background .25s,border-color .25s}
+  .verdict .dot{width:10px;height:10px;border-radius:50%;flex:none}
+  .verdict .txt{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.05rem}
+  .verdict .sub{font-size:.85rem;color:var(--ink-soft);margin-top:2px}
+  .verdict.pass{background:rgba(21,106,107,.06);border-color:var(--teal)}
+  .verdict.pass .dot{background:var(--teal)}
+  .verdict.flag{background:rgba(194,132,62,.08);border-color:var(--ochre)}
+  .verdict.flag .dot{background:var(--ochre)}
+
+  .metric{padding:13px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .metric:first-of-type{border-top:none}
+  .metric .name{font-size:.95rem;line-height:1.3}
+  .metric .name small{display:block;color:var(--ink-soft);font-size:.76rem;margin-top:2px}
+  .metric .right{display:flex;align-items:center;gap:10px;flex:none}
+  .metric .num{font-family:"JetBrains Mono",monospace;font-size:1rem;min-width:48px;text-align:right}
+  .chip{font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+  .chip.ok{background:rgba(21,106,107,.12);color:var(--teal)}
+  .chip.bad{background:rgba(194,132,62,.15);color:var(--ochre)}
+
+  .note{max-width:920px;margin:0 auto 90px;padding:0 24px;font-size:1rem;line-height:1.65;color:var(--ink-soft)}
+  .note a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+  .note p{margin-bottom:12px}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <a class="back" href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <div class="head">
+    <div class="eyebrow">Interactive</div>
+    <h1>Audit an LLM judge</h1>
+    <p class="dek">Drag the sliders to give the judge the biases real LLM evaluators are known to have, and watch standard measurement checks catch them. Everything recomputes live, on 300 simulated items, in your browser.</p>
+  </div>
+
+  <div class="lab">
+    <div class="card">
+      <h2>The judge's behavior</h2>
+
+      <div class="ctrl">
+        <div class="row"><label for="verbosity">Verbosity bias</label><span class="val" id="verbosity-v"></span></div>
+        <input type="range" id="verbosity" min="0" max="100" value="45" />
+        <div class="hint">How much a longer answer raises the score, regardless of quality.</div>
+      </div>
+
+      <div class="ctrl">
+        <div class="row"><label for="position">Position pull</label><span class="val" id="position-v"></span></div>
+        <input type="range" id="position" min="0" max="200" value="80" />
+        <div class="hint">In head-to-head mode, how strongly the judge favors whichever answer it sees first.</div>
+      </div>
+
+      <div class="ctrl">
+        <div class="row"><label for="noise">Inconsistency</label><span class="val" id="noise-v"></span></div>
+        <input type="range" id="noise" min="0" max="150" value="60" />
+        <div class="hint">Run-to-run randomness. Higher means the judge disagrees with itself on a re-score.</div>
+      </div>
+
+      <div class="ctrl">
+        <div class="row"><label for="tilt">Group tilt</label><span class="val" id="tilt-v"></span></div>
+        <input type="range" id="tilt" min="-100" max="100" value="-35" />
+        <div class="hint">A systematic offset applied to group B's answers at equal quality.</div>
+      </div>
+
+      <div class="presets">
+        <button id="preset-biased">Biased judge</button>
+        <button id="preset-clean">Clean judge</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>The audit</h2>
+
+      <div class="verdict" id="verdict">
+        <span class="dot"></span>
+        <div><div class="txt" id="verdict-txt"></div><div class="sub" id="verdict-sub"></div></div>
+      </div>
+
+      <div class="metric">
+        <div class="name">Self-consistency<small>test-retest, weighted &#954; &#183; humans &#8776; 0.90</small></div>
+        <div class="right"><span class="num" id="m-consist"></span><span class="chip" id="c-consist"></span></div>
+      </div>
+      <div class="metric">
+        <div class="name">Agreement with humans<small>weighted &#954; vs consensus</small></div>
+        <div class="right"><span class="num" id="m-agree"></span><span class="chip" id="c-agree"></span></div>
+      </div>
+      <div class="metric">
+        <div class="name">Verbosity bias<small>score ~ length | quality &#183; humans &#8776; +0.13</small></div>
+        <div class="right"><span class="num" id="m-verb"></span><span class="chip" id="c-verb"></span></div>
+      </div>
+      <div class="metric">
+        <div class="name">Group invariance<small>score gap at equal quality</small></div>
+        <div class="right"><span class="num" id="m-group"></span><span class="chip" id="c-group"></span></div>
+      </div>
+      <div class="metric">
+        <div class="name">Position bias<small>first-shown answer wins &#183; 50% is fair</small></div>
+        <div class="right"><span class="num" id="m-pos"></span><span class="chip" id="c-pos"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <p><strong>How to read this.</strong> The "true quality" of each answer is known, which is what lets the audit tell real signal from bias. A judge can agree with humans most of the time and still fail these checks: rewarding length, drifting between groups, or flipping its verdict when you swap the order of two answers.</p>
+    <p>The judge here is simulated to reproduce documented behaviors, so it's reproducible with no API. The same audit runs unchanged on a live model. Full methodology and code: <a href="https://github.com/amira-ghazy/auditing-the-llm-judge">auditing-the-llm-judge</a>. The argument behind it: <a href="ai-evaluation.html">AI Evaluation Is a Measurement Problem</a>.</p>
+  </div>
+
+  <script>
+    function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+    const rnd = mulberry32(7);
+    function gauss(){let u=0,v=0;while(u===0)u=rnd();while(v===0)v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+    const clamp = x => Math.min(5, Math.max(1, Math.round(x)));
+
+    const N = 300, M = 400, K = 5;
+    const trueQ=[], length=[], group=[], n1=[], n2=[], hn1=[], hn2=[];
+    for(let i=0;i<N;i++){
+      const q = 1+Math.floor(rnd()*5);
+      trueQ.push(q);
+      length.push(Math.min(500,Math.max(40, Math.round(180+70*gauss()+12*q))));
+      group.push(rnd()<0.5?'A':'B');
+      n1.push(gauss()); n2.push(gauss());
+      hn1.push(gauss()); hn2.push(gauss());
+    }
+    const qX=[], qY=[], u1=[], u2=[];
+    for(let j=0;j<M;j++){ qX.push(1+Math.floor(rnd()*5)); qY.push(1+Math.floor(rnd()*5)); u1.push(rnd()); u2.push(rnd()); }
+
+    const mean = a => a.reduce((s,v)=>s+v,0)/a.length;
+    function pearson(a,b){const ma=mean(a),mb=mean(b);let n=0,da=0,db=0;for(let i=0;i<a.length;i++){n+=(a[i]-ma)*(b[i]-mb);da+=(a[i]-ma)**2;db+=(b[i]-mb)**2;}return (da===0||db===0)?NaN:n/Math.sqrt(da*db);}
+    function resid(a,z){const mz=mean(z),ma=mean(a);let cov=0,vz=0;for(let i=0;i<a.length;i++){cov+=(z[i]-mz)*(a[i]-ma);vz+=(z[i]-mz)**2;}const sl=vz===0?0:cov/vz,ic=ma-sl*mz;return a.map((v,i)=>v-(ic+sl*z[i]));}
+    const partial = (x,y,z) => pearson(resid(x,z), resid(y,z));
+    function wkappa(a,b){
+      const O=Array.from({length:K},()=>new Array(K).fill(0));
+      for(let i=0;i<a.length;i++)O[a[i]-1][b[i]-1]++;
+      for(let i=0;i<K;i++)for(let j=0;j<K;j++)O[i][j]/=a.length;
+      const rows=O.map(r=>r.reduce((s,v)=>s+v,0));
+      const cols=Array.from({length:K},(_,j)=>O.reduce((s,r)=>s+r[j],0));
+      let num=0,den=0;
+      for(let i=0;i<K;i++)for(let j=0;j<K;j++){const w=((i-j)**2)/((K-1)**2);num+=w*O[i][j];den+=w*rows[i]*cols[j];}
+      return den===0?NaN:1-num/den;
+    }
+    const sig = x => 1/(1+Math.exp(-x));
+
+    const els = {
+      verbosity:document.getElementById('verbosity'), position:document.getElementById('position'),
+      noise:document.getElementById('noise'), tilt:document.getElementById('tilt'),
+    };
+    const fmt = (x,d=2) => (isFinite(x)? x.toFixed(d) : '—');
+    function setChip(id,ok,okText,badText){const c=document.getElementById(id);c.textContent=ok?okText:badText;c.className='chip '+(ok?'ok':'bad');}
+
+    function recompute(){
+      const verb = (+els.verbosity.value)/10000;
+      const pos  = (+els.position.value)/100;
+      const inc  = (+els.noise.value)/100;
+      const tilt = (+els.tilt.value)/100;
+
+      document.getElementById('verbosity-v').textContent = verb.toFixed(4);
+      document.getElementById('position-v').textContent  = pos.toFixed(2);
+      document.getElementById('noise-v').textContent     = inc.toFixed(2);
+      document.getElementById('tilt-v').textContent      = (tilt>=0?'+':'')+tilt.toFixed(2);
+
+      const j1=[], j2=[], hm=[];
+      for(let i=0;i<N;i++){
+        const base = trueQ[i] + verb*(length[i]-180) + (group[i]==='B'?tilt:0);
+        j1.push(clamp(base + inc*n1[i]));
+        j2.push(clamp(base + inc*n2[i]));
+        const a=clamp(trueQ[i]+0.5*hn1[i]), b=clamp(trueQ[i]+0.5*hn2[i]);
+        hm.push(Math.round((a+b)/2));
+      }
+
+      const consist = wkappa(j1,j2);
+      const agree = wkappa(j1,hm);
+      const verbR = partial(j1, length, trueQ);
+      let tA=0,cA=0,tB=0,cB=0;
+      for(let i=0;i<N;i++){ if(group[i]==='A'){tA+=j1[i]-trueQ[i];cA++;} else {tB+=j1[i]-trueQ[i];cB++;} }
+      const gap = Math.abs((tA/cA)-(tB/cB));
+
+      let firstWins=0, flips=0;
+      for(let j=0;j<M;j++){
+        const pX1 = u1[j] < sig(0.9*(qX[j]-qY[j])+pos);
+        const pY2 = u2[j] < sig(0.9*(qY[j]-qX[j])+pos);
+        const pX2 = !pY2;
+        firstWins += (pX1?1:0) + (pY2?1:0);
+        if(pX1 !== pX2) flips++;
+      }
+      firstWins = firstWins/(2*M);
+      flips = flips/M;
+
+      document.getElementById('m-consist').textContent = fmt(consist);
+      setChip('c-consist', consist>=0.80, 'reliable', 'shaky');
+      document.getElementById('m-agree').textContent = fmt(agree);
+      setChip('c-agree', agree>=0.60, 'ok', 'low');
+      document.getElementById('m-verb').textContent = (verbR>=0?'+':'')+fmt(verbR);
+      setChip('c-verb', Math.abs(verbR)<=0.15, 'fair', 'biased');
+      document.getElementById('m-group').textContent = fmt(gap);
+      setChip('c-group', gap<=0.10, 'fair', 'gap');
+      document.getElementById('m-pos').textContent = (firstWins*100).toFixed(0)+'%';
+      setChip('c-pos', Math.abs(firstWins-0.5)<=0.05, 'fair', 'order');
+
+      const flags = (consist<0.80) + (Math.abs(verbR)>0.15) + (gap>0.10) + (Math.abs(firstWins-0.5)>0.05);
+      const v = document.getElementById('verdict');
+      if(flags===0){
+        v.className='verdict pass';
+        document.getElementById('verdict-txt').textContent='This judge passes the audit';
+        document.getElementById('verdict-sub').textContent='No measurement red flags at these settings.';
+      } else {
+        v.className='verdict flag';
+        document.getElementById('verdict-txt').textContent='Needs review — '+flags+(flags===1?' flag':' flags');
+        document.getElementById('verdict-sub').textContent='Agreement with humans alone would have hidden this.';
+      }
+    }
+
+    Object.values(els).forEach(el=>el.addEventListener('input',recompute));
+    document.getElementById('preset-biased').addEventListener('click',()=>{els.verbosity.value=45;els.position.value=80;els.noise.value=60;els.tilt.value=-35;recompute();});
+    document.getElementById('preset-clean').addEventListener('click',()=>{els.verbosity.value=0;els.position.value=0;els.noise.value=20;els.tilt.value=0;recompute();});
+    recompute();
+  </script>
+</body>
+</html>
