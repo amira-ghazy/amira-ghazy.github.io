@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Evaluation Is a Measurement Problem — Amira Ghazy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F2;
+    --ink:#18241F;
+    --ink-soft:#4A574F;
+    --teal:#156A6B;
+    --ochre:#C2843E;
+    --line:#D5D8D1;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Newsreader",Georgia,serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{max-width:680px;margin:0 auto;padding:0 28px;display:flex;justify-content:space-between;align-items:center;height:62px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar .back{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+  .topbar .back:hover{color:var(--teal)}
+
+  .article{max-width:680px;margin:0 auto;padding:64px 28px 110px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:22px}
+  .article h1{
+    font-family:"Space Grotesk",sans-serif;font-weight:600;
+    font-size:clamp(2rem,6vw,3.1rem);line-height:1.06;letter-spacing:-.02em;
+    margin-bottom:24px;
+  }
+  .dek{
+    font-family:"Newsreader",serif;font-style:italic;font-size:1.3rem;line-height:1.5;
+    color:var(--ink-soft);border-left:2px solid var(--ochre);padding-left:18px;margin-bottom:48px;
+  }
+  .article p{font-size:1.2rem;line-height:1.7;margin-bottom:1.35em;color:var(--ink)}
+  .article h2{
+    font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.45rem;letter-spacing:-.01em;
+    line-height:1.2;margin:2.2em 0 .7em;
+  }
+  .article ul{margin:0 0 1.35em 0;padding-left:0;list-style:none}
+  .article li{
+    font-size:1.2rem;line-height:1.6;margin-bottom:.85em;padding-left:26px;position:relative;color:var(--ink);
+  }
+  .article li::before{content:"";position:absolute;left:4px;top:.62em;width:7px;height:7px;background:var(--ochre);border-radius:50%}
+  .article strong{font-weight:500}
+  .rule{border:0;border-top:1px solid var(--line);margin:48px 0}
+  .note{font-family:"Newsreader",serif;font-style:italic;font-size:1.02rem;line-height:1.6;color:var(--ink-soft)}
+  .note a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <a class="back" href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <article class="article">
+    <div class="eyebrow">Essay</div>
+    <h1>AI Evaluation Is a Measurement Problem</h1>
+    <p class="dek">Psychometrics spent a century learning how to measure things you can't see directly. AI evaluation keeps rediscovering the same lessons the hard way.</p>
+
+    <p>A familiar scene: a team builds an "LLM-as-judge" pipeline to grade model outputs, checks it against a few hundred human ratings, finds 85% agreement, and calls the evaluator validated. The eval ships. Everyone moves on.</p>
+
+    <p>In the field I trained in, that 85% isn't the finish line. It's closer to the first item on a long list of questions you're supposed to ask before trusting a score that affects a decision.</p>
+
+    <p>I came to AI evaluation from industrial-organizational psychology, where the entire job is measuring things that have no ruler. Job performance, cognitive ability, conscientiousness, "culture fit." You can't observe conscientiousness directly. You build an instrument you hope captures it, and then you spend most of your effort proving the instrument actually does what you claim. That discipline is psychometrics, and it has been sharpening its methods for roughly a hundred years, partly because the stakes (hiring, promotion, admissions) have always been high enough to invite lawsuits.</p>
+
+    <p>Watching AI evaluation grow up over the last few years, I keep recognizing problems psychometrics already named and partly solved. The field is reinventing the wheel, and occasionally shipping a square one. Here's the case for borrowing from the older discipline.</p>
+
+    <h2>A score is a measurement, and measurement starts with reliability</h2>
+
+    <p>The moment you use a model or a panel of humans to score outputs, you've built a measurement instrument. The first thing psychometrics asks of any instrument is whether it's <strong>reliable</strong>: does it produce consistent results?</p>
+
+    <p>For a rating task, that means inter-rater reliability. If you're going to treat human ratings as ground truth, the humans need to agree with each other enough to be worth agreeing with. Two raters who barely line up aren't a benchmark; they're noise wearing a lab coat. There are standard tools for this, including intraclass correlation and Cohen's kappa, and for ordinal scores you want a weighted version so that "rated a 4 instead of a 5" counts as nearly right rather than simply wrong. None of this is exotic. It's a first-week-of-class idea that a lot of eval work skips entirely, usually by reporting a single agreement percentage on a sample too small to mean much.</p>
+
+    <p>Reliability also sets a ceiling. An evaluator can't be more valid than it is reliable. If your judges are inconsistent, no amount of clever prompting downstream will rescue the measurement.</p>
+
+    <h2>Reliability is not validity</h2>
+
+    <p>Here's the distinction the field most often collapses: an instrument can be perfectly consistent and still measure the wrong thing.</p>
+
+    <p>Psychometrics treats validity as a separate, harder question, captured well by Samuel Messick's argument that validity is about whether the <strong>interpretation</strong> you put on a score is justified. A benchmark is an operationalization of some fuzzy construct: "reasoning," "helpfulness," "safety." High scores get read as "the model is good at reasoning." But the benchmark is a proxy, and proxies drift. When a model trains on data resembling the test, or when the benchmark rewards a surface pattern rather than the underlying ability, you get high reliability and low validity at the same time. The number is stable and the interpretation is wrong.</p>
+
+    <p>The psychometric habit here is to ask, out loud and in writing, what construct a benchmark claims to measure, and to gather evidence that it does. Does it cover the content domain? Does it predict an external criterion anyone cares about? Those questions feel slow. They're also the difference between a leaderboard and a measurement.</p>
+
+    <h2>Fairness is not a new problem</h2>
+
+    <p>The part that surprises people most: the legal and statistical groundwork for "is this scoring system fair across groups" was largely laid decades ago, in employment testing.</p>
+
+    <p>Because hiring tests in the United States have been subject to legal scrutiny since the 1970s, I/O psychology has spent generations on adverse impact: the four-fifths rule, group difference statistics, and the careful separation of "the test predicts equally well across groups" from "the groups score equally." More relevant to AI than any of that is measurement invariance, the formal test of whether an instrument means the same thing for different groups of people. Differential item functioning asks whether a specific item behaves differently for two equally able groups. That is precisely the question an AI fairness audit should be asking about a benchmark or an automated scorer, and most don't, because the people building them were never taught the concept existed.</p>
+
+    <p>AI fairness research is rediscovering a lot of this under new names. The rediscovery would go faster with the people who already have the vocabulary.</p>
+
+    <h2>What this looks like in practice</h2>
+
+    <p>You don't need a psychometrics degree to adopt the discipline. A few habits go a long way:</p>
+
+    <ul>
+      <li>Pilot your rubric before you trust it, and measure how well your raters (human or model) agree.</li>
+      <li>Report reliability alongside performance, not instead of it.</li>
+      <li>State the construct each eval claims to measure, and at least one piece of evidence that it does.</li>
+      <li>When the eval informs a decision about people, check for measurement invariance across groups, and treat a gap as a question to investigate rather than a number to bury.</li>
+    </ul>
+
+    <p>These steps are cheap relative to the cost of trusting a measurement that doesn't hold.</p>
+
+    <h2>Who should be in the room</h2>
+
+    <p>AI evaluation is one of the most important problems in the field right now, and it's a measurement problem dressed in machine-learning clothes. The people who have spent careers measuring unobservable human qualities reliably, validly, and defensibly have a great deal to contribute, and at the moment most of them aren't in the room.</p>
+
+    <p>I think that's a mistake worth fixing, and it's the work I'm trying to do.</p>
+
+    <hr class="rule" />
+    <p class="note">Amira Ghazy is an I/O psychologist with a focus on advanced quantitative methods, working at the intersection of measurement science and applied AI. Project code and portfolio: <a href="index.html">amira-ghazy.github.io</a></p>
+  </article>
+
+</body>
+</html>
