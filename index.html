@@ -3,33 +3,20 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Amira Ghazy — Measurement &amp; Applied AI</title>
+<title>Amira Ghazy — Measurement, Applied AI &amp; People Analytics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   :root{
-    --paper:#F4F5F2;
-    --ink:#18241F;
-    --ink-soft:#4A574F;
-    --teal:#156A6B;
-    --ochre:#C2843E;
-    --line:#D5D8D1;
-    --panel:#FBFBF9;
+    --paper:#F4F5F2; --ink:#18241F; --ink-soft:#4A574F;
+    --teal:#156A6B; --ochre:#C2843E; --line:#D5D8D1; --panel:#FBFBF9;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{
-    background:var(--paper);
-    color:var(--ink);
-    font-family:"Newsreader",Georgia,serif;
-    font-size:18px;
-    line-height:1.55;
-    -webkit-font-smoothing:antialiased;
-  }
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
   .wrap{max-width:920px;margin:0 auto;padding:0 28px}
   .mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
-  .display{font-family:"Space Grotesk",sans-serif;line-height:1.04;letter-spacing:-.02em}
   a{color:inherit}
 
   .topbar{border-bottom:1px solid var(--line)}
@@ -40,28 +27,13 @@
   .topbar nav a:hover{color:var(--teal)}
   @media(max-width:620px){.topbar nav{display:none}}
 
-  .hero{padding:78px 0 64px}
+  .hero{padding:78px 0 60px}
   .hero .eyebrow{margin-bottom:26px}
-  .hero h1{
-    font-family:"Space Grotesk",sans-serif;
-    font-weight:600;
-    font-size:clamp(2.6rem,7vw,4.6rem);
-    line-height:1.02;
-    letter-spacing:-.03em;
-    max-width:14ch;
-  }
+  .hero h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(2.5rem,6.6vw,4.3rem);line-height:1.02;letter-spacing:-.03em;max-width:16ch}
   .hero h1 em{font-style:normal;color:var(--teal)}
-  .hero .lede{
-    margin-top:28px;max-width:54ch;font-size:1.18rem;color:var(--ink-soft);
-  }
+  .hero .lede{margin-top:28px;max-width:58ch;font-size:1.18rem;color:var(--ink-soft)}
 
-  .instrument{
-    margin-top:54px;
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:2px;
-    padding:26px 30px 30px;
-  }
+  .instrument{margin-top:52px;background:var(--panel);border:1px solid var(--line);border-radius:2px;padding:26px 30px 30px}
   .instrument .head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:30px}
   .instrument .head .reading{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.1em;color:var(--ink-soft)}
   .instrument .head .reading b{color:var(--ochre);font-weight:500}
@@ -69,69 +41,49 @@
   .scale .track{position:absolute;top:50%;left:0;right:0;height:1px;background:var(--ink)}
   .scale .tick{position:absolute;top:50%;width:1px;height:9px;background:var(--line);transform:translateY(-50%)}
   .scale .tick.major{height:15px;background:var(--ink-soft)}
-  .scale .marker{
-    position:absolute;top:50%;left:50%;
-    transform:translate(-50%,-50%) scaleY(0);
-    transform-origin:center;
-    width:2px;height:40px;background:var(--ochre);
-    transition:transform .9s cubic-bezier(.22,1,.36,1) .35s, left 1.1s cubic-bezier(.22,1,.36,1) .35s;
-  }
-  .scale .marker::after{
-    content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%);
-    width:9px;height:9px;background:var(--ochre);border-radius:50%;
-  }
+  .scale .marker{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scaleY(0);transform-origin:center;width:2px;height:40px;background:var(--ochre);transition:transform .9s cubic-bezier(.22,1,.36,1) .35s, left 1.1s cubic-bezier(.22,1,.36,1) .35s}
+  .scale .marker::after{content:"";position:absolute;top:-6px;left:50%;transform:translateX(-50%);width:9px;height:9px;background:var(--ochre);border-radius:50%}
   .calibrated .scale .marker{transform:translate(-50%,-50%) scaleY(1)}
   .poles{display:flex;justify-content:space-between;margin-top:6px}
   .poles span{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
 
-  section{padding:70px 0;border-top:1px solid var(--line)}
-  .sec-label{margin-bottom:34px;display:flex;align-items:baseline;gap:14px}
+  section{padding:66px 0;border-top:1px solid var(--line)}
+  .sec-label{margin-bottom:30px;display:flex;align-items:baseline;gap:14px}
   .sec-label .num{font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--ink-soft);letter-spacing:.1em}
   .sec-label h2{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase}
 
-  .about p{font-size:1.32rem;line-height:1.5;max-width:40ch;margin-bottom:22px}
-  .about p:last-child{margin-bottom:0}
+  .about p{font-size:1.3rem;line-height:1.5;max-width:42ch}
   .about strong{font-weight:500;color:var(--teal)}
 
-  .study{
-    display:grid;grid-template-columns:140px 1fr;gap:30px;
-    padding:30px 0;border-top:1px dashed var(--line);
-  }
-  .study:first-of-type{border-top:none;padding-top:0}
-  .study .meta .method{display:block;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.1em;color:var(--teal);text-transform:uppercase;margin-bottom:10px}
-  .study .meta .stack{font-family:"JetBrains Mono",monospace;font-size:.66rem;line-height:1.9;color:var(--ink-soft)}
-  .study h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.5rem;letter-spacing:-.01em;margin-bottom:12px}
-  .study p{color:var(--ink-soft);max-width:52ch;margin-bottom:16px}
-  .study .demonstrates{font-size:.92rem;color:var(--ink)}
-  .study .demonstrates b{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:400;display:block;margin-bottom:5px}
-  .study .links{margin-top:14px}
-  .study .links a{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
-  .study .links a:hover{border-color:var(--teal)}
-  @media(max-width:620px){.study{grid-template-columns:1fr;gap:14px}}
+  .tracks{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:720px){.tracks{grid-template-columns:1fr}}
+  .track{display:block;text-decoration:none;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:30px 28px;transition:border-color .25s, transform .25s}
+  .track:hover{border-color:var(--teal);transform:translateY(-2px)}
+  .track .tlabel{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ochre);margin-bottom:16px}
+  .track h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.55rem;letter-spacing:-.01em;line-height:1.1;margin-bottom:12px}
+  .track p{color:var(--ink-soft);font-size:1.02rem;margin-bottom:18px}
+  .track .hl{list-style:none;border-top:1px dashed var(--line);padding-top:14px;margin-bottom:20px}
+  .track .hl li{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.04em;color:var(--ink-soft);padding:3px 0}
+  .track .enter{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);font-weight:500}
+  .track:hover .enter{text-decoration:underline;text-underline-offset:3px}
 
-  .toolkit{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 40px}
-  .toolkit .group h4{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
+  .toolkit{display:grid;grid-template-columns:repeat(2,1fr);gap:26px 40px}
+  .toolkit .group h4{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:11px}
   .toolkit .group ul{list-style:none}
-  .toolkit .group li{font-size:.98rem;padding:3px 0;color:var(--ink-soft)}
+  .toolkit .group li{font-size:.96rem;padding:3px 0;color:var(--ink-soft)}
   @media(max-width:620px){.toolkit{grid-template-columns:1fr}}
 
   .contact{border-top:1px solid var(--line)}
-  .contact h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.02em;margin-bottom:24px;max-width:18ch}
+  .contact h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.02em;margin-bottom:24px;max-width:20ch}
   .contact h2 em{font-style:normal;color:var(--teal)}
   .contact .links{display:flex;flex-wrap:wrap;gap:14px 28px}
   .contact .links a{font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--ochre);padding-bottom:3px}
   .contact .links a:hover{color:var(--teal);border-color:var(--teal)}
   footer{padding:40px 0 60px;color:var(--ink-soft)}
-  footer .mono{color:var(--ink-soft)}
 
   .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
-
-  @media(prefers-reduced-motion:reduce){
-    .reveal{opacity:1;transform:none;transition:none}
-    .scale .marker{transition:none}
-    html{scroll-behavior:auto}
-  }
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.scale .marker{transition:none}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -140,12 +92,8 @@
     <div class="wrap">
       <span class="id">Amira Ghazy</span>
       <nav>
-        <a href="#about">Approach</a>
-        <a href="#work">Work</a>
-        <a href="#interactive">Interactive</a>
-        <a href="#writing">Writing</a>
-        <a href="#standards">Standards</a>
-        <a href="#toolkit">Toolkit</a>
+        <a href="evaluation.html">AI Evaluation</a>
+        <a href="people-analytics.html">People Analytics</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -155,9 +103,9 @@
     <!-- HERO -->
     <div class="hero">
       <div class="wrap">
-        <div class="eyebrow mono reveal">I/O Psychology · Advanced Quantitative Methods</div>
-        <h1 class="reveal">I build systems that <em>measure</em> what people do — and prove the measurement holds.</h1>
-        <p class="lede reveal">Applied AI and analytics work grounded in psychometrics: reliability, validity, and fairness applied to machine-learning and LLM systems.</p>
+        <div class="eyebrow mono reveal">I/O Psychology · Applied AI · People Analytics</div>
+        <h1 class="reveal">I measure what's <em>hard to see</em> — and prove the measurement holds.</h1>
+        <p class="lede reveal">A century of psychometrics worked out how to measure things that don't sit still — ability, bias, reliability, fairness. I bring that rigor to two places that badly need it: evaluating AI systems, and understanding the people inside organizations.</p>
 
         <div class="instrument reveal" id="instrument">
           <div class="head">
@@ -169,200 +117,68 @@
             <div class="marker"></div>
           </div>
           <div class="poles">
-            <span>Human behavior</span>
-            <span>Machine learning</span>
+            <span>AI systems</span>
+            <span>The workforce</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ABOUT -->
+    <!-- APPROACH -->
     <section id="about" class="about">
       <div class="wrap">
         <div class="sec-label"><span class="num">01</span><h2>Approach</h2></div>
-        <p>Most people who can train a model can't tell you whether its scores actually <strong>mean</strong> anything. Most people who understand measurement can't <strong>build</strong> the model.</p>
-        <p>My training sits on both sides — a master's in industrial-organizational psychology with an advanced quantitative methods focus, plus hands-on engineering with ML and large language models.</p>
-        <p>I'm most useful where human judgment meets automated scoring: model evaluation, people analytics, and assessment systems that have to be <strong>defensible</strong>, not just accurate.</p>
+        <p>Most people who can build a model can't tell you whether its scores <strong>mean</strong> anything. Most people who understand measurement can't <strong>build</strong> the model. My work sits on both sides — and the same toolkit points at two domains.</p>
       </div>
     </section>
 
-    <!-- WORK -->
-    <section id="work">
+    <!-- TRACKS -->
+    <section id="tracks">
       <div class="wrap">
-        <div class="sec-label"><span class="num">02</span><h2>Selected Work</h2></div>
+        <div class="sec-label"><span class="num">02</span><h2>Two tracks</h2></div>
+        <div class="tracks">
 
-        <article class="study">
-          <div class="meta">
-            <span class="method">Reliability · Bias Audit</span>
-            <div class="stack">Python<br>scikit-learn<br>psychometrics</div>
-          </div>
-          <div class="body">
-            <h3>Auditing the LLM judge</h3>
-            <p>Treats an LLM-as-judge as a measurement instrument and audits it: test-retest reliability, verbosity and position bias, and whether it scores groups differently at equal quality. Includes a live, interactive demo.</p>
-            <div class="demonstrates">
-              <b>Demonstrates</b>
-              Reliability and bias auditing of an automated evaluator, the way you'd validate any rating instrument.
-            </div>
-            <div class="links"><a href="https://github.com/amira-ghazy/auditing-the-llm-judge">View repository →</a> <a href="judge-audit-demo.html" style="margin-left:18px">Try the live demo →</a></div>
-          </div>
-        </article>
+          <a class="track reveal" href="evaluation.html">
+            <div class="tlabel">Track 01</div>
+            <h3>AI Evaluation &amp; Measurement</h3>
+            <p>Treat models, benchmarks, and LLM judges as measurement instruments — and audit them like one: reliability, bias, and the validity evidence behind a score.</p>
+            <ul class="hl">
+              <li>— Auditing the LLM judge</li>
+              <li>— evalaudit · a Python library</li>
+              <li>— The Validity Card standard</li>
+              <li>— Interactive demos, games &amp; essay</li>
+            </ul>
+            <span class="enter">Enter the track →</span>
+          </a>
 
-        <article class="study">
-          <div class="meta">
-            <span class="method">Measurement · LLM Eval</span>
-            <div class="stack">Python<br>Anthropic API<br>scikit-learn<br>pandas</div>
-          </div>
-          <div class="body">
-            <h3>Does the model rate like a human?</h3>
-            <p>An LLM-based scorer for open-ended responses — essays, interview answers, survey comments — validated the way an assessment would be: inter-rater reliability against human raters, score-distribution checks, and an adverse-impact analysis across demographic groups.</p>
-            <div class="demonstrates">
-              <b>Demonstrates</b>
-              LLM engineering, psychometric validation (ICC, weighted kappa), and bias auditing in one pipeline.
-            </div>
-            <div class="links"><a href="https://github.com/amira-ghazy/llm-evaluator-psychometric">View repository →</a></div>
-          </div>
-        </article>
+          <a class="track reveal" href="people-analytics.html">
+            <div class="tlabel">Track 02</div>
+            <h3>People &amp; Workforce Analytics</h3>
+            <p>Measurement and causal rigor applied to the workforce — predicting attrition, then going past prediction to the people an intervention can actually keep.</p>
+            <ul class="hl">
+              <li>— Who should you actually keep?</li>
+              <li>— Uplift modeling for retention</li>
+              <li>— Attrition prediction &amp; fairness</li>
+              <li>— The Adverse-Impact Audit standard</li>
+            </ul>
+            <span class="enter">Enter the track →</span>
+          </a>
 
-        <article class="study">
-          <div class="meta">
-            <span class="method">Prediction · Fairness</span>
-            <div class="stack">Python<br>scikit-learn<br>gradient boosting<br>joblib</div>
-          </div>
-          <div class="body">
-            <h3>Predicting attrition without the black box</h3>
-            <p>A turnover-prediction model on public HR data that goes past accuracy: interpretable feature importance, the organizational-behavior theory behind each predictor, and a fairness review of who the model flags and why.</p>
-            <div class="demonstrates">
-              <b>Demonstrates</b>
-              Applied ML, model interpretation, and translating predictions into decisions a stakeholder can act on.
-            </div>
-            <div class="links"><a href="https://github.com/amira-ghazy/attrition-fairness">View repository →</a></div>
-          </div>
-        </article>
-
-        <article class="study">
-          <div class="meta">
-            <span class="method">NLP · Constructs</span>
-            <div class="stack">Python<br>scikit-learn<br>TF-IDF · NMF</div>
-          </div>
-          <div class="body">
-            <h3>What employees actually say</h3>
-            <p>Open-ended employee comments turned into structure: embeddings and topic modeling mapped to engagement constructs, with a read on how themes track measured outcomes rather than just word counts.</p>
-            <div class="demonstrates">
-              <b>Demonstrates</b>
-              NLP, unsupervised learning, and connecting unstructured text to validated psychological constructs.
-            </div>
-            <div class="links"><a href="https://github.com/amira-ghazy/employee-comments-nlp">View repository →</a></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- INTERACTIVE -->
-    <section id="interactive">
-      <div class="wrap">
-        <div class="sec-label"><span class="num">03</span><h2>Interactive</h2></div>
-
-        <article class="study">
-          <div class="meta"><span class="method">Live demo</span></div>
-          <div class="body">
-            <h3>Audit an LLM judge</h3>
-            <p>Drag sliders to give a judge the biases real evaluators have: verbosity, position, inconsistency, a group tilt. The measurement checks catch them live, on 300 simulated items in your browser.</p>
-            <div class="links"><a href="judge-audit-demo.html">Open the demo →</a></div>
-          </div>
-        </article>
-
-        <article class="study">
-          <div class="meta"><span class="method">Game</span></div>
-          <div class="body">
-            <h3>Spot the broken judge</h3>
-            <p>You're the reviewer. Each round shows one judge's audit report and you call ship or flag. Eight rounds, then a score and a read on your eye.</p>
-            <div class="links"><a href="spot-the-broken-judge.html">Play →</a></div>
-          </div>
-        </article>
-
-        <article class="study">
-          <div class="meta"><span class="method">Game</span></div>
-          <div class="body">
-            <h3>Are you a biased judge?</h3>
-            <p>Pick the better answer ten times, then get audited yourself: were you swayed by length, or by which answer you read first? The same biases I test models for, turned on you.</p>
-            <div class="links"><a href="are-you-a-biased-judge.html">Play →</a></div>
-          </div>
-        </article>
-
-        <article class="study">
-          <div class="meta"><span class="method">Game</span></div>
-          <div class="body">
-            <h3>Reliable, valid, both, or neither?</h3>
-            <p>Targets show where an instrument's measurements landed. Read each pattern and call it — the bullseye game for the difference between precision and accuracy.</p>
-            <div class="links"><a href="reliability-vs-validity.html">Play →</a></div>
-          </div>
-        </article>
-
-        <article class="study">
-          <div class="meta"><span class="method">Game</span></div>
-          <div class="body">
-            <h3>Calibrate the judge</h3>
-            <p>A judge arrives broken with four unlabeled dials. Diagnose which one drives each failing check and tune all five back into tolerance. The audit, played backwards.</p>
-            <div class="links"><a href="calibrate-the-judge.html">Play →</a></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- WRITING -->
-    <section id="writing">
-      <div class="wrap">
-        <div class="sec-label"><span class="num">04</span><h2>Writing</h2></div>
-        <article class="study">
-          <div class="meta">
-            <span class="method">Essay</span>
-          </div>
-          <div class="body">
-            <h3>AI Evaluation Is a Measurement Problem</h3>
-            <p>Psychometrics spent a century learning how to measure things you can't see directly. AI evaluation keeps rediscovering the same lessons the hard way.</p>
-            <div class="links"><a href="ai-evaluation.html">Read the essay →</a></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- STANDARDS -->
-    <section id="standards">
-      <div class="wrap">
-        <div class="sec-label"><span class="num">05</span><h2>Standards</h2></div>
-
-        <article class="study">
-          <div class="meta"><span class="method">Reporting standard</span></div>
-          <div class="body">
-            <h3>The Validity Card for AI Evaluations</h3>
-            <p>A short, fillable record of what an evaluation measures and what evidence backs it — a Model Card, but for the measurement validity of a benchmark or LLM judge. Several fields are answerable by running an audit, not by assertion.</p>
-            <div class="links"><a href="validity-card.html">Read the standard →</a></div>
-          </div>
-        </article>
-
-        <article class="study">
-          <div class="meta"><span class="method">Reporting standard</span></div>
-          <div class="body">
-            <h3>The Adverse-Impact Audit</h3>
-            <p>A bias-audit standard for automated employment decision tools that goes past the four-fifths ratio to differential prediction and measurement invariance — the depth the new hiring-AI laws imply but rarely get.</p>
-            <div class="links"><a href="adverse-impact-audit.html">Read the standard →</a></div>
-          </div>
-        </article>
+        </div>
       </div>
     </section>
 
     <!-- TOOLKIT -->
     <section id="toolkit">
       <div class="wrap">
-        <div class="sec-label"><span class="num">06</span><h2>Toolkit</h2></div>
+        <div class="sec-label"><span class="num">03</span><h2>Toolkit</h2></div>
         <div class="toolkit">
           <div class="group">
             <h4>Measurement &amp; Statistics</h4>
             <ul>
               <li>Reliability &amp; validity theory</li>
-              <li>Factor analysis · SEM</li>
-              <li>Item response theory</li>
-              <li>Multilevel &amp; regression modeling</li>
+              <li>Factor analysis · SEM · IRT</li>
+              <li>Causal inference · uplift modeling</li>
               <li>Adverse-impact / fairness analysis</li>
             </ul>
           </div>
@@ -411,28 +227,18 @@
 
   <footer>
     <div class="wrap">
-      <span class="mono">Amira Ghazy · Built &amp; maintained personally · 2026</span>
+      <span class="mono" style="color:var(--ink-soft)">Amira Ghazy · Built &amp; maintained personally · 2026</span>
     </div>
   </footer>
 
   <script>
     window.addEventListener('load', function(){
-      var inst = document.getElementById('instrument');
-      var scale = document.getElementById('scale');
-      for(var i=0;i<=20;i++){
-        var t=document.createElement('div');
-        t.className='tick'+(i%5===0?' major':'');
-        t.style.left=(i/20*100)+'%';
-        scale.appendChild(t);
-      }
-      var marker=scale.querySelector('.marker');
-      scale.appendChild(marker);
-      setTimeout(function(){ inst.classList.add('calibrated'); marker.style.left='50%'; },120);
+      var inst=document.getElementById('instrument'), scale=document.getElementById('scale');
+      for(var i=0;i<=20;i++){var t=document.createElement('div');t.className='tick'+(i%5===0?' major':'');t.style.left=(i/20*100)+'%';scale.appendChild(t);}
+      var marker=scale.querySelector('.marker');scale.appendChild(marker);
+      setTimeout(function(){inst.classList.add('calibrated');marker.style.left='50%';},120);
     });
-
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-    },{threshold:.12});
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
     document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
   </script>
 </body>
