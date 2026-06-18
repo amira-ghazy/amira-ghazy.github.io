@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AI Evaluation &amp; Measurement — Amira Ghazy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--paper:#F4F5F2;--ink:#18241F;--ink-soft:#4A574F;--teal:#156A6B;--ochre:#C2843E;--line:#D5D8D1;--panel:#FBFBF9}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+  a{color:inherit}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:62px;gap:14px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+  .topbar nav a{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft);white-space:nowrap}
+  .topbar nav a:hover{color:var(--teal)}
+
+  .head{padding:62px 0 10px}
+  .head .eyebrow{margin-bottom:18px}
+  .head h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.04;letter-spacing:-.02em;max-width:18ch}
+  .head .dek{margin-top:22px;max-width:60ch;font-size:1.14rem;color:var(--ink-soft)}
+
+  section{padding:60px 0;border-top:1px solid var(--line);margin-top:34px}
+  section:first-of-type{margin-top:46px}
+  .sec-label{margin-bottom:30px;display:flex;align-items:baseline;gap:14px}
+  .sec-label .num{font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--ink-soft);letter-spacing:.1em}
+  .sec-label h2{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase}
+
+  .study{display:grid;grid-template-columns:140px 1fr;gap:30px;padding:30px 0;border-top:1px dashed var(--line)}
+  .study:first-of-type{border-top:none;padding-top:0}
+  .study .meta .method{display:block;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.1em;color:var(--teal);text-transform:uppercase;margin-bottom:10px}
+  .study .meta .stack{font-family:"JetBrains Mono",monospace;font-size:.66rem;line-height:1.9;color:var(--ink-soft)}
+  .study h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.5rem;letter-spacing:-.01em;margin-bottom:12px}
+  .study p{color:var(--ink-soft);max-width:52ch;margin-bottom:16px}
+  .study .demonstrates{font-size:.92rem;color:var(--ink)}
+  .study .demonstrates b{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:400;display:block;margin-bottom:5px}
+  .study .links{margin-top:14px}
+  .study .links a{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+  .study .links a:hover{border-color:var(--teal)}
+  @media(max-width:620px){.study{grid-template-columns:1fr;gap:14px}}
+
+  .foot{border-top:1px solid var(--line);padding:46px 0 70px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .foot a{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--ochre);padding-bottom:3px}
+  .foot a:hover{color:var(--teal);border-color:var(--teal)}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <nav>
+        <a href="people-analytics.html">People Analytics →</a>
+        <a href="index.html">← Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow mono">Track 01</div>
+      <h1>AI Evaluation &amp; Measurement</h1>
+      <p class="dek">Models, benchmarks, and LLM judges are measurement instruments. I treat them like one — auditing reliability and bias, packaging the methods into tooling, and writing the standards for reporting what an evaluation actually measures.</p>
+    </div>
+
+    <section>
+      <div class="sec-label"><span class="num">01</span><h2>Selected Work</h2></div>
+
+      <article class="study">
+        <div class="meta">
+          <span class="method">Python library · Psychometrics</span>
+          <div class="stack">Python<br>numpy · pandas<br>pip-installable</div>
+        </div>
+        <div class="body">
+          <h3>evalaudit</h3>
+          <p>A drop-in audit for LLM-judge and human-rating pipelines: reliability, agreement, bias, and measurement invariance in one call. The psychometric audit I kept writing by hand, packaged, tested, and documented.</p>
+          <div class="demonstrates">
+            <b>Demonstrates</b>
+            Turning measurement theory into reusable, tested tooling others can install and run.
+          </div>
+          <div class="links"><a href="https://github.com/amira-ghazy/evalaudit">View repository →</a></div>
+        </div>
+      </article>
+
+      <article class="study">
+        <div class="meta">
+          <span class="method">Reliability · Bias Audit</span>
+          <div class="stack">Python<br>scikit-learn<br>psychometrics</div>
+        </div>
+        <div class="body">
+          <h3>Auditing the LLM judge</h3>
+          <p>Treats an LLM-as-judge as a measurement instrument and audits it: test-retest reliability, verbosity and position bias, and whether it scores groups differently at equal quality. Includes a live, interactive demo.</p>
+          <div class="demonstrates">
+            <b>Demonstrates</b>
+            Reliability and bias auditing of an automated evaluator, the way you'd validate any rating instrument.
+          </div>
+          <div class="links"><a href="https://github.com/amira-ghazy/auditing-the-llm-judge">View repository →</a> <a href="judge-audit-demo.html" style="margin-left:18px">Try the live demo →</a></div>
+        </div>
+      </article>
+
+      <article class="study">
+        <div class="meta">
+          <span class="method">Measurement · LLM Eval</span>
+          <div class="stack">Python<br>Anthropic API<br>scikit-learn<br>pandas</div>
+        </div>
+        <div class="body">
+          <h3>Does the model rate like a human?</h3>
+          <p>An LLM-based scorer for open-ended responses — essays, interview answers, survey comments — validated the way an assessment would be: inter-rater reliability against human raters, score-distribution checks, and an adverse-impact analysis across demographic groups.</p>
+          <div class="demonstrates">
+            <b>Demonstrates</b>
+            LLM engineering, psychometric validation (ICC, weighted kappa), and bias auditing in one pipeline.
+          </div>
+          <div class="links"><a href="https://github.com/amira-ghazy/llm-evaluator-psychometric">View repository →</a></div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <div class="sec-label"><span class="num">02</span><h2>Interactive</h2></div>
+
+      <article class="study">
+        <div class="meta"><span class="method">Live demo</span></div>
+        <div class="body">
+          <h3>Audit an LLM judge</h3>
+          <p>Drag sliders to give a judge the biases real evaluators have: verbosity, position, inconsistency, a group tilt. The measurement checks catch them live, on 300 simulated items in your browser.</p>
+          <div class="links"><a href="judge-audit-demo.html">Open the demo →</a></div>
+        </div>
+      </article>
+
+      <article class="study">
+        <div class="meta"><span class="method">Game</span></div>
+        <div class="body">
+          <h3>Spot the broken judge</h3>
+          <p>You're the reviewer. Each round shows one judge's audit report and you call ship or flag. Eight rounds, then a score and a read on your eye.</p>
+          <div class="links"><a href="spot-the-broken-judge.html">Play →</a></div>
+        </div>
+      </article>
+
+      <article class="study">
+        <div class="meta"><span class="method">Game</span></div>
+        <div class="body">
+          <h3>Are you a biased judge?</h3>
+          <p>Pick the better answer ten times, then get audited yourself: were you swayed by length, or by which answer you read first? The same biases I test models for, turned on you.</p>
+          <div class="links"><a href="are-you-a-biased-judge.html">Play →</a></div>
+        </div>
+      </article>
+
+      <article class="study">
+        <div class="meta"><span class="method">Game</span></div>
+        <div class="body">
+          <h3>Reliable, valid, both, or neither?</h3>
+          <p>Targets show where an instrument's measurements landed. Read each pattern and call it — the bullseye game for the difference between precision and accuracy.</p>
+          <div class="links"><a href="reliability-vs-validity.html">Play →</a></div>
+        </div>
+      </article>
+
+      <article class="study">
+        <div class="meta"><span class="method">Game</span></div>
+        <div class="body">
+          <h3>Calibrate the judge</h3>
+          <p>A judge arrives broken with four unlabeled dials. Diagnose which one drives each failing check and tune all five back into tolerance. The audit, played backwards.</p>
+          <div class="links"><a href="calibrate-the-judge.html">Play →</a></div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <div class="sec-label"><span class="num">03</span><h2>Writing</h2></div>
+      <article class="study">
+        <div class="meta"><span class="method">Essay</span></div>
+        <div class="body">
+          <h3>AI Evaluation Is a Measurement Problem</h3>
+          <p>Psychometrics spent a century learning how to measure things you can't see directly. AI evaluation keeps rediscovering the same lessons the hard way.</p>
+          <div class="links"><a href="ai-evaluation.html">Read the essay →</a></div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <div class="sec-label"><span class="num">04</span><h2>Standards</h2></div>
+      <article class="study">
+        <div class="meta"><span class="method">Reporting standard</span></div>
+        <div class="body">
+          <h3>The Validity Card for AI Evaluations</h3>
+          <p>A short, fillable record of what an evaluation measures and what evidence backs it — a Model Card, but for the measurement validity of a benchmark or LLM judge. Several fields are answerable by running an audit, not by assertion.</p>
+          <div class="links"><a href="validity-card.html">Read the standard →</a></div>
+        </div>
+      </article>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <div class="foot">
+      <a href="people-analytics.html">People &amp; Workforce Analytics →</a>
+      <a href="index.html">← Back to home</a>
+    </div>
+  </div>
+
+</body>
+</html>
