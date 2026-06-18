@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Validity Card for AI Evaluations — Amira Ghazy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F2; --ink:#18241F; --ink-soft:#4A574F;
+    --teal:#156A6B; --ochre:#C2843E; --line:#D5D8D1; --panel:#FBFBF9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{max-width:720px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:62px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar .back{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+  .topbar .back:hover{color:var(--teal)}
+
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+  .head{padding:54px 0 8px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(2.1rem,5.5vw,3rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:20px}
+  .dek{font-size:1.16rem;line-height:1.5;color:var(--ink-soft);max-width:54ch}
+
+  section{padding:34px 0;border-top:1px solid var(--line);margin-top:34px}
+  section:first-of-type{border-top:none;margin-top:8px}
+  h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.4rem;letter-spacing:-.01em;margin-bottom:16px}
+  p{margin-bottom:16px;max-width:62ch}
+  p:last-child{margin-bottom:0}
+  .lead-in{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  a.ref{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+
+  .field{border-top:1px dashed var(--line);padding:22px 0}
+  .field:first-child{border-top:none;padding-top:4px}
+  .field .ix{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.1em;color:var(--ochre);text-transform:uppercase;margin-bottom:6px}
+  .field h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.15rem;margin-bottom:4px}
+  .field .inf{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  .field .ask{color:var(--ink-soft);font-size:1rem;margin-bottom:10px}
+  .field .ea{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.04em;color:var(--teal);background:rgba(21,106,107,.08);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+
+  .ex{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:8px 22px 22px;margin-top:6px}
+  .ex .row{border-top:1px solid var(--line);padding:16px 0}
+  .ex .row:first-of-type{border-top:none}
+  .ex .k{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+  .ex .v{font-size:.98rem;color:var(--ink);max-width:none}
+  .ex .v b{font-weight:600}
+
+  .note{font-size:.97rem;color:var(--ink-soft)}
+  footer{padding:44px 0 70px;border-top:1px solid var(--line);margin-top:34px}
+  footer .mono{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  footer a{color:var(--teal)}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap" style="padding:0 24px">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <a class="back" href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Reporting standard · Draft</div>
+      <h1>The Validity Card for AI Evaluations</h1>
+      <p class="dek">A short, fillable record of what an evaluation actually measures — and what evidence backs the claim. Model Cards did this for models and Datasheets for datasets. Evals don't have one yet.</p>
+    </div>
+
+    <section>
+      <div class="lead-in">The gap</div>
+      <p>A benchmark score or an LLM judge's rating is a measurement, and measurements carry an implicit claim: that the number means what we say it means. Psychometrics spent a century formalizing how to defend that claim — the <em>Standards for Educational and Psychological Testing</em> (AERA, APA &amp; NCME), Messick's unified validity, Kane's argument-based validation. Recent work has begun importing that apparatus into AI evaluation, framing a benchmark as a chain of inferences from response to real-world claim.</p>
+      <p>But that work lives in papers. There is no compact artifact a practitioner fills in — the way a Model Card (Mitchell et al.) or a Datasheet (Gebru et al.) travels with a model or dataset — that records the validity evidence for an eval and travels with it. This is a draft of that artifact: seven fields, each tied to an inference a score quietly depends on, several answerable by running an audit rather than by assertion.</p>
+    </section>
+
+    <section>
+      <div class="lead-in">The card</div>
+      <p class="note">One card per evaluation (a benchmark, a rubric, an LLM-as-judge). A field left blank is not neutral — it marks an inference no one has defended.</p>
+
+      <div class="field">
+        <div class="ix">01</div>
+        <h3>Claim</h3>
+        <div class="inf">intended interpretation &amp; use</div>
+        <div class="ask">What construct does this eval claim to measure, and what decision rides on the score? Validity is a property of that interpretation and use, not of the test in the abstract.</div>
+      </div>
+
+      <div class="field">
+        <div class="ix">02</div>
+        <h3>Scoring</h3>
+        <div class="inf">Kane: scoring inference</div>
+        <div class="ask">How is a response turned into a number — answer key, rubric, human raters, an LLM judge? What is the reliability of that scoring: test–retest across runs, inter-rater agreement?</div>
+        <span class="ea">evalaudit · self-consistency, agreement w/ humans</span>
+      </div>
+
+      <div class="field">
+        <div class="ix">03</div>
+        <h3>Generalization</h3>
+        <div class="inf">Kane: generalization inference</div>
+        <div class="ask">Does performance on this item set generalize to the construct's domain? Coverage and sampling, item count, and the controls against contamination or leakage that would let a score generalize for the wrong reason.</div>
+      </div>
+
+      <div class="field">
+        <div class="ix">04</div>
+        <h3>Extrapolation</h3>
+        <div class="inf">Kane: extrapolation inference · criterion validity</div>
+        <div class="ask">Does the score predict the real-world target it stands in for? Evidence linking eval performance to deployment outcomes — and an honest statement of the lab-to-production gap where that evidence is thin.</div>
+      </div>
+
+      <div class="field">
+        <div class="ix">05</div>
+        <h3>Invariance &amp; fairness</h3>
+        <div class="inf">measurement invariance · consequential validity</div>
+        <div class="ask">Does the instrument measure the same thing across groups and conditions, or does it tilt? Judge-side biases (verbosity, position), differential item functioning at equal true quality, and adverse impact on the decisions that follow.</div>
+        <span class="ea">evalaudit · verbosity, position, u
