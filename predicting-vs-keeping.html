@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Predicting Who Leaves Isn't Knowing Who to Keep — Amira Ghazy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F2; --ink:#18241F; --ink-soft:#4A574F;
+    --teal:#156A6B; --ochre:#C2843E; --line:#D5D8D1; --panel:#FBFBF9; --grey:#7E867C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:19px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{max-width:680px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:62px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar .back{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+  .topbar .back:hover{color:var(--teal)}
+
+  .wrap{max-width:680px;margin:0 auto;padding:0 24px}
+  .head{padding:56px 0 22px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(2.1rem,5.5vw,3rem);line-height:1.04;letter-spacing:-.02em;margin-bottom:18px}
+  .dek{font-size:1.18rem;line-height:1.45;color:var(--ink-soft);font-style:italic}
+
+  article{padding:30px 0 10px}
+  article p{margin-bottom:22px}
+  article h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.32rem;letter-spacing:-.01em;margin:36px 0 14px}
+  em{font-style:italic}
+
+  .types{border:1px solid var(--line);border-radius:3px;background:var(--panel);padding:6px 22px;margin:24px 0}
+  .types .t{border-top:1px solid var(--line);padding:15px 0}
+  .types .t:first-child{border-top:none}
+  .types .t .n{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.02rem;display:flex;align-items:center;gap:9px;margin-bottom:3px}
+  .types .t .n i{width:10px;height:10px;border-radius:50%;flex:none}
+  .types .t .d{font-size:.99rem;color:var(--ink-soft)}
+
+  .pull{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:1.22rem;line-height:1.35;color:var(--ink);border-left:2px solid var(--ochre);padding:4px 0 4px 20px;margin:28px 0}
+
+  .end{margin-top:34px;border-top:1px solid var(--line);padding:24px 0 70px;font-size:1rem;color:var(--ink-soft)}
+  .end a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <a class="back" href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Explainer · People analytics</div>
+      <h1>Predicting who leaves isn't knowing who to keep</h1>
+      <p class="dek">Attrition models answer the wrong question. The one that matters is causal.</p>
+    </div>
+
+    <article>
+      <p>The standard retention project looks rigorous. Pull the HR data, train a model to predict who is likely to quit, rank everyone by risk, and point the retention budget at the top of the list. It feels like data-driven HR. It quietly answers the wrong question.</p>
+
+      <p>A risk score tells you <em>who will leave</em>. A retention decision needs <em>who will stay because of what you do</em> — and those are not the same people. The first is a prediction. The second is a comparison between two futures for the same person: the one where you act, and the one where you don't. That difference has a name in causal inference — the treatment effect, or in the targeting literature, uplift. A risk score does not contain it, and no amount of accuracy will put it there.</p>
+
+      <h2>Four kinds of employee</h2>
+      <p>Once the question becomes "does our action change this person's decision," everyone sorts into one of four groups:</p>
+
+      <div class="types">
+        <div class="t"><div class="n"><i style="background:#156A6B"></i>Persuadables</div><div class="d">Would leave if you do nothing, stay if you act. The only group your budget can actually move.</div></div>
+        <div class="t"><div class="n"><i style="background:#7E867C"></i>Sure things</div><div class="d">Stay either way. Acting on them spends money to buy a decision you already had.</div></div>
+        <div class="t"><div class="n"><i style="background:#4A574F"></i>Lost causes</div><div class="d">Leave either way. Acting on them buys nothing.</div></div>
+        <div class="t"><div class="n"><i style="background:#C2843E"></i>Sleeping dogs</div><div class="d">Would have stayed — but the intervention pushes them out. Acting on them is worse than doing nothing.</div></div>
+      </div>
+
+      <p>The trap is in the first and third. A persuadable and a lost cause look identical to a flight-risk model: both are high-risk. The model ranks them side by side at the top of the list, and the budget splits between the people you can save and the people you can't. Uplift is the only lens that tells them apart.</p>
+
+      <p class="pull">A flight-risk model can't distinguish the employee you can keep from the one you can't. They have the same risk. They have opposite uplift.</p>
+
+      <h2>Why it bites</h2>
+      <p>The gap is widest exactly when it matters most. Retention budgets are small, so you treat the top of a ranked list. Rank by risk and the highest-risk names — the lost causes — sit at the top; the budget is gone before it reaches a persuadable. Worse, a blanket "reach out to everyone at risk" program will sweep in sleeping dogs, and for them the outreach <em>is</em> the thing that makes them leave. This is why "we ran a retention program and attrition didn't move" is such a common story. The program was aimed at the wrong question.</p>
+
+      <p>It is also the question leaders now ask out loud: did the program work, and was it worth it? That is not answerable by a prediction. It is a causal claim about an effect, and it has to be designed for, not back-fitted from a dashboard.</p>
+
+      <h2>How you'd actually measure it</h2>
+      <p>Uplift is a difference between a treated and an untreated world, so estimating it needs variation in who was treated. The clean way is an experiment: randomize who receives the intervention, then model the difference in outcomes — a two-model (T-learner) setup, uplift trees, or a causal forest. Short of a true experiment, you work with a quasi-experiment and carry the usual burdens: confounding, and the fact that the people who got the intervention were rarely comparable to those who didn't.</p>
+
+      <p>And here is the honest part. Without that design, uplift is an assumption, not a measurement. That is exactly why most organizations don't have it — and why the real skill is the habit of asking the causal question and building the data to answer it, rather than settling for one more accurate prediction of the wrong thing.</p>
+
+      <p>Predicting who leaves is the easy half, and it is where most analytics functions stop. Knowing who to keep is the half that needs a causal design — and it is the half that decides whether the budget did anything at all.</p>
+    </article>
+
+    <div class="end">
+      See the difference in the interactive demo, <a href="who-to-keep.html">Who should you actually keep?</a> — and the companion that does the easy half well, the flight-risk model in <a href="https://github.com/amira-ghazy/attrition-fairness">attrition-fairness</a>.
+    </div>
+  </div>
+
+</body>
+</html>
