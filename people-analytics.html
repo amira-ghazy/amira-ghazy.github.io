@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>People &amp; Workforce Analytics — Amira Ghazy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{--paper:#F4F5F2;--ink:#18241F;--ink-soft:#4A574F;--teal:#156A6B;--ochre:#C2843E;--line:#D5D8D1;--panel:#FBFBF9}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:920px;margin:0 auto;padding:0 28px}
+  .mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+  a{color:inherit}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:62px;gap:14px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+  .topbar nav a{font-family:"JetBrains Mono",monospace;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft);white-space:nowrap}
+  .topbar nav a:hover{color:var(--teal)}
+
+  .head{padding:62px 0 10px}
+  .head .eyebrow{margin-bottom:18px}
+  .head h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(2.2rem,6vw,3.4rem);line-height:1.04;letter-spacing:-.02em;max-width:18ch}
+  .head .dek{margin-top:22px;max-width:60ch;font-size:1.14rem;color:var(--ink-soft)}
+
+  section{padding:60px 0;border-top:1px solid var(--line);margin-top:34px}
+  section:first-of-type{margin-top:46px}
+  .sec-label{margin-bottom:30px;display:flex;align-items:baseline;gap:14px}
+  .sec-label .num{font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--ink-soft);letter-spacing:.1em}
+  .sec-label h2{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase}
+
+  .study{display:grid;grid-template-columns:140px 1fr;gap:30px;padding:30px 0;border-top:1px dashed var(--line)}
+  .study:first-of-type{border-top:none;padding-top:0}
+  .study .meta .method{display:block;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.1em;color:var(--teal);text-transform:uppercase;margin-bottom:10px}
+  .study .meta .stack{font-family:"JetBrains Mono",monospace;font-size:.66rem;line-height:1.9;color:var(--ink-soft)}
+  .study h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.5rem;letter-spacing:-.01em;margin-bottom:12px}
+  .study p{color:var(--ink-soft);max-width:52ch;margin-bottom:16px}
+  .study .demonstrates{font-size:.92rem;color:var(--ink)}
+  .study .demonstrates b{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);font-weight:400;display:block;margin-bottom:5px}
+  .study .links{margin-top:14px}
+  .study .links a{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--teal);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+  .study .links a:hover{border-color:var(--teal)}
+  @media(max-width:620px){.study{grid-template-columns:1fr;gap:14px}}
+
+  .foot{border-top:1px solid var(--line);padding:46px 0 70px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .foot a{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:var(--ink);border-bottom:2px solid var(--ochre);padding-bottom:3px}
+  .foot a:hover{color:var(--teal);border-color:var(--teal)}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <nav>
+        <a href="evaluation.html">AI Evaluation →</a>
+        <a href="index.html">← Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow mono">Track 02</div>
+      <h1>People &amp; Workforce Analytics</h1>
+      <p class="dek">The same measurement and causal rigor, turned on the workforce: predicting who leaves, then going past prediction to who an intervention can actually keep — and auditing the tools that make employment decisions.</p>
+    </div>
+
+    <section>
+      <div class="sec-label"><span class="num">01</span><h2>Selected Work</h2></div>
+
+      <article class="study">
+        <div class="meta">
+          <span class="method">Causal inference · Uplift</span>
+          <div class="stack">Python<br>scikit-learn<br>scipy<br>T-learner</div>
+        </div>
+        <div class="body">
+          <h3>Uplift modeling for retention</h3>
+          <p>Past predicting who leaves to estimating who an intervention can actually keep. A T-learner recovers heterogeneous treatment effects on semi-synthetic HR data and beats flight-risk targeting on the same budget — with the randomization caveat stated up front.</p>
+          <div class="demonstrates">
+            <b>Demonstrates</b>
+            Causal inference, heterogeneous treatment effects, and translating an estimate into a targeting decision.
+          </div>
+          <div class="links"><a href="https://github.com/amira-ghazy/uplift-retention">View repository →</a> <a href="who-to-keep.html" style="margin-left:18px">Try the live demo →</a></div>
+        </div>
+      </article>
+
+      <article class="study">
+        <div class="meta">
+          <span class="method">Prediction · Fairness</span>
+          <div class="stack">Python<br>scikit-learn<br>gradient boosting<br>joblib</div>
+        </div>
+        <div class="body">
+          <h3>Predicting attrition without the black box</h3>
+          <p>A turnover-prediction model on public HR data that goes past accuracy: interpretable feature importance, the organizational-behavior theory behind each predictor, and a fairness review of who the model flags and why.</p>
+          <div class="demonstrates">
+            <b>Demonstrates</b>
+            Applied ML, model interpretation, and the honest limits of a prediction-only approach.
+          </div>
+          <div class="links"><a href="https://github.com/amira-ghazy/attrition-fairness">View repository →</a></div>
+        </div>
+      </article>
+
+      <article class="study">
+        <div class="meta">
+          <span class="method">NLP · Constructs</span>
+          <div class="stack">Python<br>scikit-learn<br>TF-IDF · NMF</div>
+        </div>
+        <div class="body">
+          <h3>What employees actually say</h3>
+          <p>Open-ended employee comments turned into structure: embeddings and topic modeling mapped to engagement constructs, with a read on how themes track measured outcomes rather than just word counts.</p>
+          <div class="demonstrates">
+            <b>Demonstrates</b>
+            NLP, unsupervised learning, and connecting unstructured text to validated psychological constructs.
+          </div>
+          <div class="links"><a href="https://github.com/amira-ghazy/employee-comments-nlp">View repository →</a></div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <div class="sec-label"><span class="num">02</span><h2>Interactive</h2></div>
+      <article class="study">
+        <div class="meta"><span class="method">Live demo</span></div>
+        <div class="body">
+          <h3>Who should you actually keep?</h3>
+          <p>You have a retention budget and 120 employees. Target by flight risk, or by uplift, and watch the same budget save very different numbers — because the people most likely to leave often aren't the ones you can move.</p>
+          <div class="links"><a href="who-to-keep.html">Open the demo →</a></div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <div class="sec-label"><span class="num">03</span><h2>Writing</h2></div>
+      <article class="study">
+        <div class="meta"><span class="method">Explainer</span></div>
+        <div class="body">
+          <h3>Predicting who leaves isn't knowing who to keep</h3>
+          <p>Attrition models answer the wrong question. The one that matters — who stays because of what you do — is causal, and a risk score can't reach it.</p>
+          <div class="links"><a href="predicting-vs-keeping.html">Read it →</a></div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <div class="sec-label"><span class="num">04</span><h2>Standards</h2></div>
+      <article class="study">
+        <div class="meta"><span class="method">Reporting standard</span></div>
+        <div class="body">
+          <h3>The Adverse-Impact Audit</h3>
+          <p>A bias-audit standard for automated employment decision tools that goes past the four-fifths ratio to differential prediction and measurement invariance — the depth the new hiring-AI laws imply but rarely get.</p>
+          <div class="links"><a href="adverse-impact-audit.html">Read the standard →</a></div>
+        </div>
+      </article>
+    </section>
+  </div>
+
+  <div class="wrap">
+    <div class="foot">
+      <a href="evaluation.html">AI Evaluation &amp; Measurement →</a>
+      <a href="index.html">← Back to home</a>
+    </div>
+  </div>
+
+</body>
+</html>
