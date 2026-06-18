@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Adverse-Impact Audit — Amira Ghazy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F2; --ink:#18241F; --ink-soft:#4A574F;
+    --teal:#156A6B; --ochre:#C2843E; --line:#D5D8D1; --panel:#FBFBF9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{max-width:720px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:62px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar .back{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+  .topbar .back:hover{color:var(--teal)}
+
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+  .head{padding:54px 0 8px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:18px}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(2.1rem,5.5vw,3rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:20px}
+  .dek{font-size:1.16rem;line-height:1.5;color:var(--ink-soft);max-width:54ch}
+
+  section{padding:34px 0;border-top:1px solid var(--line);margin-top:34px}
+  section:first-of-type{border-top:none;margin-top:8px}
+  h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.4rem;letter-spacing:-.01em;margin-bottom:16px}
+  p{margin-bottom:16px;max-width:62ch}
+  p:last-child{margin-bottom:0}
+  .lead-in{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  a.ref{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+
+  .field{border-top:1px dashed var(--line);padding:22px 0}
+  .field:first-child{border-top:none;padding-top:4px}
+  .field .ix{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.1em;color:var(--ochre);text-transform:uppercase;margin-bottom:6px}
+  .field h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.15rem;margin-bottom:4px}
+  .field .inf{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:10px}
+  .field .ask{color:var(--ink-soft);font-size:1rem;margin-bottom:10px}
+  .field .ea{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.04em;color:var(--teal);background:rgba(21,106,107,.08);border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+
+  .ex{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:8px 22px 22px;margin-top:6px}
+  .ex .row{border-top:1px solid var(--line);padding:16px 0}
+  .ex .row:first-of-type{border-top:none}
+  .ex .k{font-family:"JetBrains Mono",monospace;font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+  .ex .v{font-size:.98rem;color:var(--ink);max-width:none}
+  .ex .v b{font-weight:600}
+
+  .note{font-size:.97rem;color:var(--ink-soft)}
+  footer{padding:44px 0 70px;border-top:1px solid var(--line);margin-top:34px}
+  footer .mono{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+  footer a{color:var(--teal)}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <a class="back" href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="head">
+      <div class="eyebrow">Reporting standard · Draft</div>
+      <h1>The Adverse-Impact Audit</h1>
+      <p class="dek">A bias-audit standard for automated employment decision tools — hiring, ranking, promotion, attrition flags. The four-fifths ratio is where the law starts. It is not where the bias is.</p>
+    </div>
+
+    <section>
+      <div class="lead-in">The gap</div>
+      <p>Bias audits of hiring algorithms are now mandated, not optional — New York City's Local Law 144, Colorado's SB 24-205, the EU AI Act's high-risk classification of employment tools. Most audits answer the question the law asks literally: compute a selection-rate ratio, check it against the four-fifths rule, publish it.</p>
+      <p>That ratio is a screen, not a diagnosis. It tells you a group is selected less often; it cannot tell you whether the tool is <em>wrong</em> about them. The deeper question — does the tool predict a group's actual job performance fairly — is the one industrial-organizational psychology has answered since the 1970s, through the <em>Uniform Guidelines on Employee Selection Procedures</em> and Cleary's regression model of test bias. That layer is largely absent from the tooling being sold today. This is a draft standard that records both: the legal floor, and the predictive-bias evidence underneath it.</p>
+    </section>
+
+    <section>
+      <div class="lead-in">The audit</div>
+      <p class="note">One record per tool-and-decision. The fields run from the legal floor upward; the serious findings usually live below the ratio, not in it.</p>
+
+      <div class="field">
+        <div class="ix">01</div>
+        <h3>Tool &amp; decision</h3>
+        <div class="inf">scope</div>
+        <div class="ask">What is the tool, what employment decision does it drive — screen, rank, score, recommend, flag — and over what applicant or employee population? An audit is scoped to a decision, not to a model in the abstract.</div>
+      </div>
+
+      <div class="field">
+        <div class="ix">02</div>
+        <h3>Adverse impact</h3>
+        <div class="inf">four-fifths rule · statistical significance</div>
+        <div class="ask">Selection or scoring rate for each protected group against the highest-selected group: the impact ratio read against the four-fifths (80%) threshold, by sex, race/ethnicity, and intersectional category — plus a significance test, since the ratio alone is unstable at small N.</div>
+      </div>
+
+      <div class="field">
+        <div class="ix">03</div>
+        <h3>Differential validity</h3>
+        <div class="inf">predictor–criterion correlation by group</div>
+        <div class="ask">Does the score predict the job-relevant outcome equally well across groups? Equal validity is necessary but not sufficient — a tool can correlate with performance equally in two groups and still be biased in <em>how</em> it predicts.</div>
+      </div>
+
+      <div class="field">
+        <div class="ix">04</div>
+        <h3>Differential prediction</h3>
+        <div class="inf">Cleary (1968) regression model of test bias</div>
+        <div class="ask">Regress the real outcome on the tool's score, group, and their interaction. A common prediction line that systematically over- or under-predicts a group's actual performance — an intercept or slope difference — is predictive bias in the legal and scientific sense. The layer most audits skip.</div>
+        <span class="ea">evalaudit · uniform &amp; non-uniform DIF (same regression engine)</span>
+      </div>
+
+      <div class="field">
+        <div class="ix">05</div>
+        <h3>Measurement invariance</h3>
+        <div class="inf">metric &amp; scalar invariance</div>
+        <div class="ask">Independent of outcomes, does the instrument measure the same construct across groups — equal loadings (metric) and equal intercepts (scalar)? Scalar non-invariance is the measurement-side mirror of uniform predictive bias.</div>
+      </div>
+
+      <div class="field">
+        <div class="ix">06</div>
+        <h3>Job-relatedness &amp; alternatives</h3>
+        <div class="inf">Uniform Guidelines · business necessity</div>
+        <div class="ask">Where adverse impact exists, is the tool validated as job-related and consistent with business necessity, and was a less-discriminatory alternative of comparable validity sought and documented? The duty to look for that alternative is part of the standard, not a courtesy.</div>
+      </div>
+
+      <div class="field">
+        <div class="ix">07</div>
+        <h3>Consequences &amp; cadence</h3>
+        <div class="inf">governance</div>
+        <div class="ask">Who bears a false screen-out, what is disclosed to candidates, and how often is the tool re-audited — at minimum annually and on every model or data change? Maps to Local Law 144's published impact ratios and Colorado SB 24-205's risk-assessment and documentation duties.</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="lead-in">Worked example</div>
+      <h2>A resume-screening model that ranks applicants pass / fail</h2>
+      <div class="ex">
+        <div class="row"><div class="k">01 · Tool &amp; decision</div><div class="v">Model scores resumes 0–100; the top band advances to interview. Audited over one hiring cycle, ~2,000 applicants, by sex and race/ethnicity. Illustrative figures.</div></div>
+        <div class="row"><div class="k">02 · Adverse impact</div><div class="v">Pass rate <b>48%</b> reference vs <b>34%</b> focal group → impact ratio <b>0.71</b>, below the 0.80 four-fifths threshold. Two-proportion test significant (p &lt; .01). Adverse impact indicated, and beyond chance.</div></div>
+        <div class="row"><div class="k">03 · Differential validity</div><div class="v">Score–performance correlation <b>0.31</b> reference vs <b>0.28</b> focal — comparable. The tool predicts about equally well in both groups, so equal validity is <b>not</b> the issue.</div></div>
+        <div class="row"><div class="k">04 · Differential prediction</div><div class="v">A common regression line <b>under-predicts the focal group's actual first-year performance by ~0.2 SD</b> (intercept shift). The tool rates them lower than their on-the-job results warrant — predictive bias against the focal group. The finding the impact ratio alone never surfaces.</div></div>
+        <div class="row"><div class="k">05 · Measurement invariance</div><div class="v">Metric invariance holds; scalar invariance fails — group intercepts differ, consistent with the uniform under-prediction in (04).</div></div>
+        <div class="row"><div class="k">06 · Job-relatedness &amp; alternatives</div><div class="v">Criterion-validated against performance, so job-related. But dropping a ZIP-code-correlated feature narrows the impact-ratio gap while retaining most predictive power — a less-discriminatory alternative exists, so it must be adopted or its rejection justified.</div></div>
+        <div class="row"><div class="k">07 · Consequences &amp; cadence</div><div class="v">False screen-outs deny qualified focal-group applicants an interview. Publish the impact ratios, document the differential-prediction finding and the alternative, re-audit each cycle. The (04) finding — not the (02) ratio — is the legally serious one.</div></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="lead-in">Why it goes past the ratio</div>
+      <p>The four-fifths ratio is the floor the law sets. Differential prediction is where the science lives — and the two can disagree. A tool can clear the ratio and still under-predict a group's real performance; it can fail the ratio for reasons that turn out to be job-related. An audit that reports only the ratio answers the wrong question precisely.</p>
+      <p class="note">Grounded in the <em>Uniform Guidelines on Employee Selection Procedures</em> (EEOC, 1978), Cleary's regression model of test bias (1968), and the <em>Standards for Educational and Psychological Testing</em> — applied to the 2023–2026 wave of AEDT law. The differential-prediction and invariance fields run on the same regression engine as <a class="ref" href="https://github.com/amira-ghazy/evalaudit">evalaudit</a> and the model in <a class="ref" href="https://github.com/amira-ghazy/attrition-fairness">attrition-fairness</a>. Sibling to <a class="ref" href="validity-card.html">the Validity Card for AI evaluations</a>: the same measurement logic, pointed at employment decisions instead of model scores.</p>
+    </section>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span class="mono">Amira Ghazy · Draft for discussion · 2026</span>
+    </div>
+  </footer>
+
+</body>
+</html>
