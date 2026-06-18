@@ -32,7 +32,6 @@
   .display{font-family:"Space Grotesk",sans-serif;line-height:1.04;letter-spacing:-.02em}
   a{color:inherit}
 
-  /* ---- top bar ---- */
   .topbar{border-bottom:1px solid var(--line)}
   .topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:62px}
   .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem}
@@ -41,7 +40,6 @@
   .topbar nav a:hover{color:var(--teal)}
   @media(max-width:620px){.topbar nav{display:none}}
 
-  /* ---- hero ---- */
   .hero{padding:78px 0 64px}
   .hero .eyebrow{margin-bottom:26px}
   .hero h1{
@@ -57,7 +55,6 @@
     margin-top:28px;max-width:54ch;font-size:1.18rem;color:var(--ink-soft);
   }
 
-  /* ---- signature: the calibration instrument ---- */
   .instrument{
     margin-top:54px;
     background:var(--panel);
@@ -87,18 +84,15 @@
   .poles{display:flex;justify-content:space-between;margin-top:6px}
   .poles span{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
 
-  /* ---- generic section ---- */
   section{padding:70px 0;border-top:1px solid var(--line)}
   .sec-label{margin-bottom:34px;display:flex;align-items:baseline;gap:14px}
   .sec-label .num{font-family:"JetBrains Mono",monospace;font-size:.68rem;color:var(--ink-soft);letter-spacing:.1em}
   .sec-label h2{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:1.05rem;letter-spacing:.02em;text-transform:uppercase}
 
-  /* ---- about ---- */
   .about p{font-size:1.32rem;line-height:1.5;max-width:40ch;margin-bottom:22px}
   .about p:last-child{margin-bottom:0}
   .about strong{font-weight:500;color:var(--teal)}
 
-  /* ---- studies ---- */
   .study{
     display:grid;grid-template-columns:140px 1fr;gap:30px;
     padding:30px 0;border-top:1px dashed var(--line);
@@ -115,14 +109,12 @@
   .study .links a:hover{border-color:var(--teal)}
   @media(max-width:620px){.study{grid-template-columns:1fr;gap:14px}}
 
-  /* ---- toolkit ---- */
   .toolkit{display:grid;grid-template-columns:repeat(2,1fr);gap:30px 40px}
   .toolkit .group h4{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:12px}
   .toolkit .group ul{list-style:none}
   .toolkit .group li{font-size:.98rem;padding:3px 0;color:var(--ink-soft)}
   @media(max-width:620px){.toolkit{grid-template-columns:1fr}}
 
-  /* ---- contact ---- */
   .contact{border-top:1px solid var(--line)}
   .contact h2{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(1.8rem,5vw,2.8rem);letter-spacing:-.02em;margin-bottom:24px;max-width:18ch}
   .contact h2 em{font-style:normal;color:var(--teal)}
@@ -132,7 +124,6 @@
   footer{padding:40px 0 60px;color:var(--ink-soft)}
   footer .mono{color:var(--ink-soft)}
 
-  /* load reveal */
   .reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s ease}
   .reveal.in{opacity:1;transform:none}
 
@@ -167,7 +158,6 @@
         <h1 class="reveal">I build systems that <em>measure</em> what people do — and prove the measurement holds.</h1>
         <p class="lede reveal">Applied AI and analytics work grounded in psychometrics: reliability, validity, and fairness applied to machine-learning and LLM systems.</p>
 
-        <!-- SIGNATURE: calibration instrument -->
         <div class="instrument reveal" id="instrument">
           <div class="head">
             <span class="mono">Calibration</span>
@@ -297,6 +287,24 @@
             <div class="links"><a href="are-you-a-biased-judge.html">Play →</a></div>
           </div>
         </article>
+
+        <article class="study">
+          <div class="meta"><span class="method">Game</span></div>
+          <div class="body">
+            <h3>Reliable, valid, both, or neither?</h3>
+            <p>Targets show where an instrument's measurements landed. Read each pattern and call it — the bullseye game for the difference between precision and accuracy.</p>
+            <div class="links"><a href="reliability-vs-validity.html">Play →</a></div>
+          </div>
+        </article>
+
+        <article class="study">
+          <div class="meta"><span class="method">Game</span></div>
+          <div class="body">
+            <h3>Calibrate the judge</h3>
+            <p>A judge arrives broken with four unlabeled dials. Diagnose which one drives each failing check and tune all five back into tolerance. The audit, played backwards.</p>
+            <div class="links"><a href="calibrate-the-judge.html">Play →</a></div>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -382,11 +390,9 @@
   </footer>
 
   <script>
-    // calibration marker settles to center on load
     window.addEventListener('load', function(){
       var inst = document.getElementById('instrument');
       var scale = document.getElementById('scale');
-      // build ticks
       for(var i=0;i<=20;i++){
         var t=document.createElement('div');
         t.className='tick'+(i%5===0?' major':'');
@@ -394,11 +400,10 @@
         scale.appendChild(t);
       }
       var marker=scale.querySelector('.marker');
-      scale.appendChild(marker); // keep marker on top
+      scale.appendChild(marker);
       setTimeout(function(){ inst.classList.add('calibrated'); marker.style.left='50%'; },120);
     });
 
-    // scroll reveal
     var io=new IntersectionObserver(function(entries){
       entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
     },{threshold:.12});
