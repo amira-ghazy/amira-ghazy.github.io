@@ -57,6 +57,10 @@
   .chip.ok{background:rgba(21,106,107,.12);color:var(--teal)}
   .chip.bad{background:rgba(194,132,62,.16);color:var(--ochre)}
 
+  .outcome{margin-top:6px;border-top:2px solid var(--line)}
+  .outcome .metric{border-top:none}
+  .ocap{font-size:.8rem;line-height:1.45;color:var(--ink-soft);padding:0 0 2px}
+
   .reset{margin-top:22px;font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:#fff;border:1px solid var(--line);border-radius:3px;padding:11px 18px;cursor:pointer}
   .reset:hover{border-color:var(--teal)}
 
@@ -78,7 +82,7 @@
   <div class="head">
     <div class="eyebrow">Game</div>
     <h1>Calibrate the judge</h1>
-    <p class="dek">This judge arrives broken. Four unlabeled dials each control something about how it scores. You're not told which is which — read the audit, find the dial, and tune all five checks into tolerance. No labels, just symptoms.</p>
+    <p class="dek">This judge arrives broken. Four unlabeled dials each introduce one fault. You're not told which is which — read the audit, find the dial behind each failing check, and clear all four. The fifth reading, agreement with humans, has no dial: it's the payoff that comes good on its own once the other four are in tolerance.</p>
   </div>
 
   <div class="lab">
@@ -99,10 +103,13 @@
         <div><div class="txt" id="stxt"></div><div class="sub" id="ssub"></div></div>
       </div>
       <div class="metric"><div class="name">Self-consistency<small>&#8805; 0.80</small></div><div class="right"><span class="num" id="m-c"></span><span class="chip" id="c-c"></span></div></div>
-      <div class="metric"><div class="name">Agreement w/ humans<small>&#8805; 0.60</small></div><div class="right"><span class="num" id="m-a"></span><span class="chip" id="c-a"></span></div></div>
       <div class="metric"><div class="name">Verbosity bias<small>|r| &#8804; 0.15</small></div><div class="right"><span class="num" id="m-v"></span><span class="chip" id="c-v"></span></div></div>
       <div class="metric"><div class="name">Group invariance<small>gap &#8804; 0.10</small></div><div class="right"><span class="num" id="m-g"></span><span class="chip" id="c-g"></span></div></div>
       <div class="metric"><div class="name">Position bias<small>45&ndash;55%</small></div><div class="right"><span class="num" id="m-p"></span><span class="chip" id="c-p"></span></div></div>
+      <div class="outcome">
+        <div class="metric"><div class="name">Agreement w/ humans<small>no dial &#183; the payoff</small></div><div class="right"><span class="num" id="m-a"></span><span class="chip" id="c-a"></span></div></div>
+        <div class="ocap">No knob for this one. It climbs back on its own as the four faults above come into tolerance &mdash; agreement with the human criterion is what a reliable, unbiased judge gives you.</div>
+      </div>
     </div>
   </div>
 
@@ -161,10 +168,10 @@
       if(passing===4 && okA){
         st.className='status win';
         document.getElementById('stxt').textContent='Calibrated.';
-        document.getElementById('ssub').textContent='Every check is in tolerance. That judge is fit to ship.';
+        document.getElementById('ssub').textContent='Four faults cleared \u2014 and agreement with the humans came back on its own. Fit to ship.';
       } else {
         st.className='status';
-        document.getElementById('stxt').textContent=passing+' / 4 checks in tolerance';
+        document.getElementById('stxt').textContent=passing+' / 4 faults cleared';
         document.getElementById('ssub').textContent='Find the dial behind each "out" and bring it home.';
       }
     }
