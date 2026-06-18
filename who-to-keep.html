@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Who Should You Actually Keep? — Amira Ghazy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F2; --ink:#18241F; --ink-soft:#4A574F;
+    --teal:#156A6B; --ochre:#C2843E; --line:#D5D8D1; --panel:#FBFBF9;
+    --grey:#A7AEA4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{max-width:960px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:62px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar .back{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+  .topbar .back:hover{color:var(--teal)}
+
+  .head{max-width:960px;margin:0 auto;padding:50px 24px 14px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(2rem,5.5vw,2.9rem);line-height:1.05;letter-spacing:-.02em;margin-bottom:14px}
+  .dek{font-size:1.08rem;line-height:1.55;color:var(--ink-soft);max-width:60ch}
+
+  .lab{max-width:960px;margin:16px auto 70px;padding:0 24px;display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:start}
+  @media(max-width:780px){.lab{grid-template-columns:1fr;gap:20px}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:22px}
+  .card h2{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:14px}
+
+  svg{width:100%;height:auto;display:block}
+  .axis{font-family:"JetBrains Mono",monospace;font-size:9px;fill:var(--ink-soft);letter-spacing:.04em}
+  .gridline{stroke:var(--line);stroke-width:1}
+  .zero{stroke:var(--ink-soft);stroke-width:1;stroke-dasharray:3 3}
+  .dot{transition:none}
+  .legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:12px}
+  .legend span{font-family:"JetBrains Mono",monospace;font-size:.62rem;letter-spacing:.04em;color:var(--ink-soft);display:flex;align-items:center;gap:6px}
+  .legend i{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+  .ctrl{margin-bottom:22px}
+  .ctrl .lab2{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+  .ctrl label{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:.96rem}
+  .ctrl .val{font-family:"JetBrains Mono",monospace;font-size:.74rem;color:var(--teal)}
+  input[type=range]{width:100%;accent-color:var(--teal);height:24px}
+
+  .toggle{display:flex;gap:0;border:1px solid var(--line);border-radius:3px;overflow:hidden}
+  .toggle button{flex:1;font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:.9rem;padding:11px 8px;border:none;background:#fff;color:var(--ink-soft);cursor:pointer}
+  .toggle button.on{background:var(--teal);color:#fff}
+
+  .out{border-top:1px solid var(--line);margin-top:6px;padding-top:18px}
+  .out .big{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:2.4rem;letter-spacing:-.02em;color:var(--teal);line-height:1}
+  .out .big small{font-family:"JetBrains Mono",monospace;font-size:.7rem;font-weight:400;letter-spacing:.06em;color:var(--ink-soft);text-transform:uppercase;display:block;margin-top:6px}
+  .cmp{margin-top:16px;font-size:.95rem;line-height:1.5;color:var(--ink-soft)}
+  .cmp b{color:var(--ink);font-weight:600}
+  .insight{margin-top:14px;font-size:.92rem;line-height:1.5;color:var(--ink);background:rgba(194,132,62,.09);border:1px solid var(--line);border-radius:3px;padding:11px 13px}
+  .insight.good{background:rgba(21,106,107,.08)}
+
+  .note{max-width:960px;margin:0 auto 90px;padding:0 24px;font-size:1rem;line-height:1.65;color:var(--ink-soft)}
+  .note a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <a class="back" href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <div class="head">
+    <div class="eyebrow">Live demo · People analytics</div>
+    <h1>Who should you actually keep?</h1>
+    <p class="dek">A retention budget lets you act on a limited number of employees. The instinct is to target whoever's most likely to leave. But the people most likely to leave often aren't the people you can change. Pick a strategy and watch the same budget save very different numbers.</p>
+  </div>
+
+  <div class="lab">
+    <div class="card">
+      <h2>120 employees</h2>
+      <div id="plot"></div>
+      <div class="legend">
+        <span><i style="background:#156A6B"></i>Persuadable — stays only if you act</span>
+        <span><i style="background:#4A574F"></i>Lost cause — leaves either way</span>
+        <span><i style="background:#A7AEA4"></i>Sure thing — stays either way</span>
+        <span><i style="background:#C2843E"></i>Sleeping dog — acting backfires</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Your move</h2>
+      <div class="ctrl">
+        <div class="lab2"><label>Targeting strategy</label></div>
+        <div class="toggle">
+          <button id="b-risk" class="on">By flight risk</button>
+          <button id="b-uplift">By uplift</button>
+        </div>
+      </div>
+      <div class="ctrl">
+        <div class="lab2"><label for="bud">Retention budget</label><span class="val" id="budval">treat 20</span></div>
+        <input type="range" id="bud" min="5" max="90" value="20">
+      </div>
+
+      <div class="out">
+        <div class="big" id="savedbig">0<small id="savedlab">expected stays bought</small></div>
+        <div class="cmp" id="cmp"></div>
+        <div class="insight" id="insight"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <p>The outcome is expected <em>stays you caused</em> — the sum of each treated person's uplift (how much your action lowers their chance of leaving). Targeting by flight risk pours the budget into lost causes who leave anyway; targeting by uplift finds the persuadables, the only group whose decision your action actually changes. The gap is widest when the budget is tight, which is when it always is. Predicting <em>who leaves</em> is not the same as knowing <em>who to keep</em> — that second question is causal, and it's the one <a href="https://github.com/amira-ghazy/attrition-fairness">a flight-risk model</a> can't answer.</p>
+  </div>
+
+  <script>
+    function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+    var rnd=mulberry32(11);
+    function gauss(){var u=0,v=0;while(u===0)u=rnd();while(v===0)v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+    var clamp=function(x,lo,hi){return Math.min(hi,Math.max(lo,x));};
+    var SEG=[
+      {name:'persuadable',col:'#156A6B',w:0.28,p0:[0.62,0.08],p1:[0.18,0.06]},
+      {name:'lost cause', col:'#4A574F',w:0.22,p0:[0.82,0.06],p1:[0.76,0.06]},
+      {name:'sure thing', col:'#A7AEA4',w:0.30,p0:[0.12,0.05],p1:[0.09,0.04]},
+      {name:'sleeping dog',col:'#C2843E',w:0.20,p0:[0.25,0.06],p1:[0.48,0.08]}
+    ];
+    var N=120, emp=[];
+    for(var i=0;i<N;i++){
+      var r=rnd(),acc=0,seg=SEG[0];
+      for(var s=0;s<SEG.length;s++){acc+=SEG[s].w; if(r<=acc){seg=SEG[s];break;}}
+      var p0=clamp(seg.p0[0]+seg.p0[1]*gauss(),0.02,0.97);
+      var p1=clamp(seg.p1[0]+seg.p1[1]*gauss(),0.02,0.97);
+      emp.push({seg:seg.name,col:seg.col,p0:p0,p1:p1,uplift:p0-p1});
+    }
+
+    var PADL=44,PADR=14,PADT=14,PADB=34,W=440,H=340;
+    var plotW=W-PADL-PADR, plotH=H-PADT-PADB;
+    var UMIN=-0.4, UMAX=0.6;
+    function xPix(p0){return PADL + p0*plotW;}
+    function yPix(u){return PADT + (1-(u-UMIN)/(UMAX-UMIN))*plotH;}
+
+    function topBy(key,B){
+      return emp.map(function(e,i){return i;}).sort(function(a,b){return emp[b][key]-emp[a][key];}).slice(0,B);
+    }
+    function savedOf(idxs){var s=0;for(var k=0;k<idxs.length;k++)s+=emp[idxs[k]].uplift;return s;}
+
+    var strategy='risk', budget=20;
+
+    function draw(){
+      var key = strategy==='risk' ? 'p0' : 'uplift';
+      var treated = topBy(key,budget);
+      var tset={}; treated.forEach(function(i){tset[i]=1;});
+      var s='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="employee scatter">';
+      s+='<line class="gridline" x1="'+PADL+'" y1="'+PADT+'" x2="'+PADL+'" y2="'+(PADT+plotH)+'"></line>';
+      s+='<line class="gridline" x1="'+PADL+'" y1="'+(PADT+plotH)+'" x2="'+(PADL+plotW)+'" y2="'+(PADT+plotH)+'"></line>';
+      var yz=yPix(0);
+      s+='<line class="zero" x1="'+PADL+'" y1="'+yz+'" x2="'+(PADL+plotW)+'" y2="'+yz+'"></line>';
+      s+='<text class="axis" x="'+(PADL+plotW)+'" y="'+(yz-4)+'" text-anchor="end">uplift = 0 · action does nothing</text>';
+      s+='<text class="axis" x="'+(PADL+plotW/2)+'" y="'+(H-6)+'" text-anchor="middle">baseline flight risk &#8594;</text>';
+      s+='<text class="axis" transform="translate(11,'+(PADT+plotH/2)+') rotate(-90)" text-anchor="middle">intervention uplift &#8594;</text>';
+      function dot(i,treatedRing){
+        var e=emp[i];
+        var cx=xPix(e.p0).toFixed(1), cy=yPix(e.uplift).toFixed(1);
+        if(treatedRing){
+          return '<circle cx="'+cx+'" cy="'+cy+'" r="6.5" fill="none" stroke="'+e.col+'" stroke-width="2"></circle>'+
+                 '<circle cx="'+cx+'" cy="'+cy+'" r="3.4" fill="'+e.col+'"></circle>';
+        }
+        return '<circle cx="'+cx+'" cy="'+cy+'" r="3.6" fill="'+e.col+'" fill-opacity="0.34"></circle>';
+      }
+      for(var i=0;i<N;i++){ if(!tset[i]) s+=dot(i,false); }
+      for(var j=0;j<treated.length;j++){ s+=dot(treated[j],true); }
+      s+='</svg>';
+      document.getElementById('plot').innerHTML=s;
+
+      var savedRisk=savedOf(topBy('p0',budget));
+      var savedUp=savedOf(topBy('uplift',budget));
+      var active = strategy==='risk'?savedRisk:savedUp;
+      document.getElementById('savedbig').childNodes[0].nodeValue = active.toFixed(1);
+      document.getElementById('budval').textContent='treat '+budget;
+
+      var counts={}; treated.forEach(function(i){counts[emp[i].seg]=(counts[emp[i].seg]||0)+1;});
+      var lost=counts['lost cause']||0, pers=counts['persuadable']||0, dogs=counts['sleeping dog']||0;
+
+      var cmp=document.getElementById('cmp');
+      cmp.innerHTML = 'Same budget, by uplift: <b>'+savedUp.toFixed(1)+'</b> &nbsp;·&nbsp; by flight risk: <b>'+savedRisk.toFixed(1)+'</b>'+
+        '<br>Uplift targeting keeps <b>'+(savedRisk>0.3?(savedUp/savedRisk).toFixed(1)+'&times;':'far')+'</b> more for the same spend.';
+
+      var ins=document.getElementById('insight');
+      if(strategy==='risk'){
+        ins.className='insight';
+        ins.innerHTML = lost>0
+          ? '<b>'+lost+' of your '+budget+'</b> went to lost causes — people leaving no matter what you do. The budget bought almost nothing.'
+          : 'At this budget, flight-risk targeting finally reaches the persuadables — but only after the cheaper budgets were wasted.';
+      } else {
+        ins.className='insight good';
+        ins.innerHTML = 'Uplift targeting spends on <b>'+pers+' persuadables</b>'+(dogs>0?' and steers clear of sleeping dogs':'')+' — the people whose decision your action actually changes.';
+      }
+    }
+
+    document.getElementById('b-risk').onclick=function(){strategy='risk';this.classList.add('on');document.getElementById('b-uplift').classList.remove('on');draw();};
+    document.getElementById('b-uplift').onclick=function(){strategy='uplift';this.classList.add('on');document.getElementById('b-risk').classList.remove('on');draw();};
+    document.getElementById('bud').oninput=function(){budget=+this.value;draw();};
+    draw();
+  </script>
+</body>
+</html>
