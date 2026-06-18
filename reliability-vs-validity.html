@@ -6,4 +6,219 @@
 <title>Reliable, Valid, Both, or Neither? — Amira Ghazy</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#F4F5F2; --ink:#18241F; --ink-soft:#4A574F;
+    --teal:#156A6B; --ochre:#C2843E; --line:#D5D8D1; --panel:#FBFBF9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Newsreader",Georgia,serif;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+
+  .topbar{border-bottom:1px solid var(--line)}
+  .topbar .wrap{max-width:640px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;height:62px}
+  .topbar .id{font-family:"Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.01em;font-size:1rem;text-decoration:none}
+  .topbar .back{font-family:"JetBrains Mono",monospace;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--ink-soft)}
+  .topbar .back:hover{color:var(--teal)}
+
+  .head{max-width:640px;margin:0 auto;padding:50px 24px 16px}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:16px}
+  h1{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(1.9rem,5.5vw,2.7rem);line-height:1.06;letter-spacing:-.02em;margin-bottom:14px}
+  .dek{font-size:1.06rem;line-height:1.55;color:var(--ink-soft);max-width:52ch}
+
+  .legend{max-width:640px;margin:0 auto 22px;padding:0 24px}
+  .legend .inner{font-family:"JetBrains Mono",monospace;font-size:.69rem;line-height:1.8;color:var(--ink-soft);background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:12px 16px}
+  .legend b{color:var(--ink);font-weight:500}
+
+  .stage{max-width:640px;margin:0 auto 80px;padding:0 24px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:24px}
+
+  .bar{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;font-family:"JetBrains Mono",monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+  .bar .score b{color:var(--teal);font-weight:500}
+  .bar .streak{color:var(--ochre)}
+  .progress{height:3px;background:var(--line);border-radius:2px;margin:0 0 18px;overflow:hidden}
+  .progress span{display:block;height:100%;background:var(--teal);width:0;transition:width .4s ease}
+
+  .target-wrap{display:flex;justify-content:center;margin:6px 0 20px}
+  svg{width:100%;max-width:320px;height:auto;display:block}
+  .ring{fill:none;stroke:var(--line);stroke-width:1}
+  .cross{stroke:var(--line);stroke-width:1}
+  .bull{fill:var(--teal)}
+  .shot{fill:var(--ochre);fill-opacity:.85}
+  .centroid{fill:none;stroke:var(--teal);stroke-width:2}
+  .biasline{stroke:var(--teal);stroke-width:1.2;stroke-dasharray:4 3}
+
+  .choices{display:flex;flex-direction:column;gap:10px}
+  .choices button{
+    width:100%;text-align:left;font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:1rem;
+    padding:14px 16px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:3px;cursor:pointer;
+    transition:border-color .15s,background .15s;
+  }
+  .choices button small{display:block;font-family:"JetBrains Mono",monospace;font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);margin-top:3px}
+  .choices button:hover{border-color:var(--teal)}
+  .choices button:disabled{cursor:default}
+  .choices button.correct{border-color:var(--teal);background:rgba(21,106,107,.08)}
+  .choices button.wrong{border-color:var(--ochre);background:rgba(194,132,62,.08)}
+  .choices button.faded{opacity:.4}
+
+  .result{margin-top:18px;border:1px solid var(--line);border-radius:3px;padding:15px 17px;display:none}
+  .result.show{display:block}
+  .result .v{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1.02rem;margin-bottom:6px;display:flex;align-items:center;gap:9px}
+  .result .v .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .result .why{font-size:.95rem;line-height:1.5;color:var(--ink-soft)}
+  .result.right{background:rgba(21,106,107,.05);border-color:var(--teal)}
+  .result.right .dot{background:var(--teal)}
+  .result.wrong-bg{background:rgba(194,132,62,.06);border-color:var(--ochre)}
+  .result.wrong-bg .dot{background:var(--ochre)}
+  .next{margin-top:15px;font-family:"JetBrains Mono",monospace;font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);background:none;border:none;border-bottom:1px solid var(--line);padding:0 0 3px;cursor:pointer}
+  .next:hover{border-color:var(--teal)}
+
+  .end{text-align:center;padding:12px 0}
+  .end .final{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:3.2rem;letter-spacing:-.02em;color:var(--teal);line-height:1}
+  .end .of{font-family:"JetBrains Mono",monospace;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+  .end .tier{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:1.2rem;margin:16px 0 10px}
+  .end .tag{font-size:.97rem;line-height:1.55;color:var(--ink-soft);max-width:46ch;margin:0 auto 22px}
+  .end .tag a{color:var(--teal);text-decoration:underline;text-underline-offset:3px}
+  .again{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:1rem;padding:12px 26px;border:1px solid var(--teal);color:var(--teal);background:#fff;border-radius:3px;cursor:pointer}
+  .again:hover{background:rgba(21,106,107,.06)}
+
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="wrap">
+      <a class="id" href="index.html">Amira Ghazy</a>
+      <a class="back" href="index.html">← Home</a>
+    </div>
+  </header>
+
+  <div class="head">
+    <div class="eyebrow">Game</div>
+    <h1>Reliable, valid, both, or neither?</h1>
+    <p class="dek">Each target shows where an instrument's measurements landed. The bullseye is the true value. Read the pattern and call it. Eight rounds.</p>
+  </div>
+
+  <div class="legend">
+    <div class="inner">
+      <b>RELIABILITY</b> = the shots cluster together (consistent) &nbsp;·&nbsp; <b>VALIDITY</b> = the shots sit on the bullseye (on target)
+    </div>
+  </div>
+
+  <div class="stage">
+    <div class="card" id="card"></div>
+  </div>
+
+  <script>
+  (function(){
+    var CATS = [
+      {key:"rv", label:"Reliable & valid",   sub:"tight, on the bullseye",  sigma:7,  biased:false},
+      {key:"ri", label:"Reliable, not valid",sub:"tight, off the bullseye", sigma:7,  biased:true },
+      {key:"uv", label:"Valid, not reliable",sub:"scattered, but centered", sigma:34, biased:false},
+      {key:"ui", label:"Neither",            sub:"scattered and off-center",sigma:34, biased:true }
+    ];
+    var WHY = {
+      rv:"Tight cluster sitting on the bullseye. The ideal: consistent and correct.",
+      ri:"Tight cluster, but parked off the bullseye. The dangerous one \u2014 consistent and consistently wrong. A biased judge looks exactly like this.",
+      uv:"Scattered, so not reliable, but the shots balance around the bullseye, so it's roughly right on average. Noisy but unbiased.",
+      ui:"Scattered and off-center. Neither reliable nor valid: noisy and biased at once."
+    };
+    var ROUNDS = 8;
+    var card = document.getElementById("card");
+    var deck = [], idx = 0, score = 0, streak = 0, answered = false, pts = [], cat = null;
+
+    function gauss(){var u=0,v=0;while(u===0)u=Math.random();while(v===0)v=Math.random();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+    function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+
+    function makePoints(c){
+      var n=12, p=[], bx=0, by=0;
+      var sig = c.sigma*(0.85+0.3*Math.random());
+      if(c.biased){var ang=Math.random()*2*Math.PI, mag=44+Math.random()*12; bx=Math.cos(ang)*mag; by=Math.sin(ang)*mag;}
+      for(var i=0;i<n;i++){
+        var x=bx+sig*gauss(), y=by+sig*gauss();
+        var r=Math.hypot(x,y); if(r>112){x*=112/r; y*=112/r;}
+        p.push([x,y]);
+      }
+      return p;
+    }
+
+    function targetSVG(points, reveal){
+      var s='<svg viewBox="-130 -130 260 260" role="img" aria-label="measurement target">';
+      [110,84,58,32].forEach(function(rr){ s+='<circle class="ring" cx="0" cy="0" r="'+rr+'"></circle>'; });
+      s+='<line class="cross" x1="-122" y1="0" x2="122" y2="0"></line><line class="cross" x1="0" y1="-122" x2="0" y2="122"></line>';
+      s+='<circle class="bull" cx="0" cy="0" r="4.5"></circle>';
+      points.forEach(function(pt){ s+='<circle class="shot" cx="'+pt[0].toFixed(1)+'" cy="'+pt[1].toFixed(1)+'" r="4"></circle>'; });
+      if(reveal){
+        var mx=0,my=0; points.forEach(function(pt){mx+=pt[0];my+=pt[1];}); mx/=points.length; my/=points.length;
+        s+='<line class="biasline" x1="0" y1="0" x2="'+mx.toFixed(1)+'" y2="'+my.toFixed(1)+'"></line>';
+        s+='<circle class="centroid" cx="'+mx.toFixed(1)+'" cy="'+my.toFixed(1)+'" r="9"></circle>';
+      }
+      return s+'</svg>';
+    }
+
+    function start(){
+      deck = shuffle([0,0,1,1,2,2,3,3].map(function(i){return CATS[i];}));
+      idx=0; score=0; streak=0; render();
+    }
+
+    function render(){
+      answered=false;
+      cat = deck[idx];
+      pts = makePoints(cat);
+      var opts = CATS.map(function(c){
+        return '<button data-key="'+c.key+'">'+c.label+'<small>'+c.sub+'</small></button>';
+      }).join("");
+      card.innerHTML =
+        '<div class="bar"><span>Round '+(idx+1)+' / '+ROUNDS+'</span>'+
+        '<span class="score">Score <b>'+score+'</b>'+(streak>1?' <span class="streak">&#183; '+streak+' streak</span>':'')+'</span></div>'+
+        '<div class="progress"><span style="width:'+(idx/ROUNDS*100)+'%"></span></div>'+
+        '<div class="target-wrap">'+targetSVG(pts,false)+'</div>'+
+        '<div class="choices" id="choices">'+opts+'</div>'+
+        '<div class="result" id="result"><div class="v"><span class="dot"></span><span id="vt"></span></div>'+
+        '<div class="why" id="why"></div><button class="next" id="next"></button></div>';
+      Array.prototype.forEach.call(document.querySelectorAll("#choices button"), function(b){
+        b.onclick=function(){ choose(b.getAttribute("data-key"), b); };
+      });
+    }
+
+    function choose(key, btn){
+      if(answered) return; answered=true;
+      var correct = key===cat.key;
+      if(correct){ score++; streak++; } else { streak=0; }
+      document.querySelector(".target-wrap").innerHTML = targetSVG(pts, true);
+      Array.prototype.forEach.call(document.querySelectorAll("#choices button"), function(b){
+        b.disabled=true;
+        var k=b.getAttribute("data-key");
+        if(k===cat.key) b.classList.add("correct");
+        else if(k===key) b.classList.add("wrong");
+        else b.classList.add("faded");
+      });
+      var res=document.getElementById("result");
+      res.className="result show "+(correct?"right":"wrong-bg");
+      document.getElementById("vt").textContent=(correct?"Correct \u2014 ":"Not quite \u2014 ")+cat.label.toLowerCase();
+      document.getElementById("why").textContent=WHY[cat.key];
+      var nx=document.getElementById("next");
+      nx.textContent=(idx+1<ROUNDS)?"Next target \u2192":"See your score \u2192";
+      nx.onclick=function(){ idx++; (idx<ROUNDS)?render():end(); };
+    }
+
+    function end(){
+      var tier, tag;
+      if(score===ROUNDS){ tier="Perfect read."; tag="You separated precision from accuracy every time \u2014 the distinction most people blur."; }
+      else if(score>=6){ tier="Sharp eye."; tag="You caught the tricky one: tight but biased is still wrong."; }
+      else if(score>=4){ tier="Getting it."; tag="Remember: clustering is reliability, centering is validity. They're independent."; }
+      else { tier="Worth another round."; tag="Reliability is whether the shots agree with each other; validity is whether they agree with the truth."; }
+      card.innerHTML='<div class="end"><div class="final">'+score+'</div><div class="of">of '+ROUNDS+' correct</div>'+
+        '<div class="tier">'+tier+'</div>'+
+        '<div class="tag">'+tag+' This is the distinction under everything in AI evaluation: a judge can be perfectly reliable and still invalid, scoring the wrong thing consistently. More in <a href="ai-evaluation.html">the essay</a>, or watch it on a live judge in <a href="judge-audit-demo.html">the demo</a>.</div>'+
+        '<button class="again" id="again">Play again</button></div>';
+      document.getElementById("again").onclick=start;
+    }
+
+    start();
+  })();
+  </script>
+</body>
+</html>
